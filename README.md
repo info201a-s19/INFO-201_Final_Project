@@ -8,6 +8,9 @@ We wanted to learn more about flights in the United States.
 
 ## What other examples of data driven project have you found related to this domain (share at least 3)?
 - There is a package called `nycflights13` which detail all the flights to and from NYC in 2013.
+- There is a tutorial called 'predicting flight delays' on Kaggle that developed a prediction model.
+It also emphasizes the steps needed to build such a model.
+- A Kaggle user used a dataset on 2015 Flight Delays and Cancellations to rank airlines.
 
 ## What data-driven questions do you hope to answer about this domain (share at least 3)?
 - What is the largest airline by passenger count?

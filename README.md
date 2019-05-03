@@ -40,7 +40,9 @@ What is the largest airline by passenger count?
 [From Kaggle: Flights Route Database](https://www.kaggle.com/open-flights/flight-route-database)
 
 ## How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?
-This dataset is collected from openflight.org under the open database license and contains 59036 routes between 3209 airports on 531 airlines spanning the globe.
+This dataset is collected from openflight.org under the open database license and contains 59036 routes between 3209 airports on 531 airlines spanning the globe. Openflight.org is organized by Jani Patokallio, who sourced the airport
+base data from Digital Aeronautical Flight Information File (DAFIF, October 2006 cycle), OurAirports, and timezone information form EarthTools. Airline data was extracted directly from Wikipedia's list of airlines. Plane data is
+sourced from the List of ICAO aircraft type designators.
 
 ## How many observations (rows) are in your data?
 67663 observations
@@ -57,7 +59,12 @@ What is the most common flight path?
 [From Github: Airport Codes](https://github.com/datasets/airport-codes)
 
 ## How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?
-[The data was compiled from many different sources](http://ourairports.com/data/)
+The dataset was compiled by David Megginson, a private pilot, onto ourairports.com. He sourced the data from the multiple sources for various reasons. He collected data on airport and aviation weather data through Federal Aviation Administration (FAA) and DAFIF. A list of Canadian airports and seaplane bases is sourced from George Plews's website. Other airport data
+are sourced from navaid.com, soaringweb.com, and Great Circle Mapper. A list of North Korean and Australian airports are
+sourced from the Federation of American Scientists (FAS) and Kwik Navigation Flight Planner, respectively. Arrival and
+departure data are sourced from FlightStats and weather forecasts based on longitude and latitude from forecast.io. Overall,
+these datasets were organized using a free Google Maps mapping API and geocoder by David Megginson and Geonames's
+geolocation APIs. The dataset contains airport codes, which could refer to either the IATA airport code, a three-letter code which is used in passenger reservation, ticketing and baggage-handling systems, or the ICAO airport code which is a four letter code used by ATC systems and for airports that do not have an IATA airport code.
 
 ## How many observations (rows) are in your data?
 54736 observations

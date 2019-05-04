@@ -4,8 +4,7 @@ Use this `README.md` file to describe your final project (as detailed on Canvas)
 # Domain
 Flights in the United States
 ## Why are you interested in this field/domain?
-We wanted to learn more about flights in the United States. There are many datasets about flights in general,
-but we wanted to specifically find statistics about flights here in the United States.
+We wanted to learn more about flights in the United States because many people travel everyday by plane within the United States and internationally. Therefore, knowing flight details and when flights are typically delayed are important and can be helpful for people especially out of state and international students that need to book tickets to fly home. There are many datasets about flights in general, but we wanted to specifically find statistics about flights here in the United States.
 
 ## What other examples of data driven project have you found related to this domain (share at least 3)?
 - There is a package called [nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html) which detail all the flights to and from NYC in 2013.

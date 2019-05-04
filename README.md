@@ -57,7 +57,7 @@ From there, we can filter by the highest number of flights between two airports.
 # Dataset 3
 
 ## Where did you download the data (e.g., a web URL)?
-[From Github: Airport Codes](https://github.com/datasets/airport-codes)
+[From OurAirports: Airports](http://ourairports.com/data/)
 
 ## How was the data collected or generated? Make sure to explain who collected the data (not necessarily the same people that host the data), and who or what the data is about?
 The dataset was compiled by David Megginson, a private pilot, onto ourairports.com. He sourced the data from the multiple sources for various reasons. He collected data on airport and aviation weather data through Federal Aviation Administration (FAA) and DAFIF. A list of Canadian airports and seaplane bases is sourced from George Plews's website. Other airport data

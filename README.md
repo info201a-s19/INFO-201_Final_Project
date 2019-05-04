@@ -68,10 +68,10 @@ these datasets were organized using a free Google Maps mapping API and geocoder 
 geolocation APIs. The dataset contains airport codes, which could refer to either the IATA airport code, a three-letter code which is used in passenger reservation, ticketing and baggage-handling systems, or the ICAO airport code which is a four letter code used by ATC systems and for airports that do not have an IATA airport code.
 
 ## How many observations (rows) are in your data?
-54736 observations
+55237 observations
 
 ## How many features (columns) are in the data?
-12 features
+18 features
 
 ## What questions (from above) can be answered using the data in this dataset?
 What is the highest elevation of an airport in the United States? To see this, we can filter by elevation of airports, and find the maximum elevation of airports.

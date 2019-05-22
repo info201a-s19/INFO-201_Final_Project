@@ -18,7 +18,7 @@ This report is about flights in the United States. We wanted to limit our scope 
 
 ##Table
 
-This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of airport of each region. The table showes that Taxes has the most number of airports. Sao Paulo, Brazil, has the highest average elevation of airports. 
+This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of airport of each region. The table showes that Texas has the most number of airports. Sao Paulo, Brazil, has the highest average elevation of airports. 
 ```{r busiest_airport, echo = F}
   kable(busiest_airport, align = "c",
         col.names = c("Region", "Number of airports", "Most common type of airports", "Average elevation in ft"))

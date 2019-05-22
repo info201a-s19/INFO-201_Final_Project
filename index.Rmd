@@ -5,7 +5,15 @@ date: "May 20, 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, warning=FALSE, message=FALSE, echo=FALSE,include=FALSE}
+knitr::opts_chunk$set(echo = F)
+library(knitr)
+library(lintr)
+library("dplyr")
+source("airports_table.R")
+```
+
+```{r busiest_airport, echo = F}
+  kable(busiest_airport, align = "c",col.names = c("Region", "Number of airports", "Most common type of airports", "Average elevation in ft"))
 ```
 

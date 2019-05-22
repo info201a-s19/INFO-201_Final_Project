@@ -4,7 +4,7 @@ airports_csv <- read.csv("data/airports.csv")
 #table
 busiest_airport <- airports_csv %>%
   filter(!is.na(iso_region)) %>%
-  group_by(iso_region) %>% 
+  group_by(iso_region) %>%
   summarise(
     n = n(),
     most_type = tail(names(sort(table(airports_csv$type))), 1),

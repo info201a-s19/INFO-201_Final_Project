@@ -10,6 +10,13 @@ library("tidyr")
 only_us_airports <- us_airports %>%
   filter(iso_country == "US", longitude_deg < -50, latitude_deg > 15)
 
+types <- only_us_airports %>%
+  group_by(type) %>%
+  summarize(count = n())
+
+airports <- only_us_airports %>%
+  filter(type == "small_airport" | type == "medium_airport" | type == "large_airport")
+
 
 # gg <- ggplot()
 # gg <- gg + geom_polygon(data=only_us_airpots, aes(x=longitude_deg, y=latitude_deg, fill=NA), color = "black", fill=NA, size=0.5) +

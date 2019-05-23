@@ -7,5 +7,28 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Load results from the analysis
+source("scripts/first_chart.R")
+
+# Loading libraries
+library("knitr")
+library("ggplot2")
+library("plotly")
+library("kableExtra")
+library("maps")
+library("leaflet")
 ```
+
+```{r only_us_airports, echo = FALSE}
+us_map <- leaflet() %>% addTiles()
+us_map %>% addCircleMarkers(
+  lat = only_us_aiports$latitude_deg,
+  lng = only_us_aiports$longitude_deg
+  popup = paste("Name:", only_us_aiports$name, "<br>",
+                "Type:", only_us_aiports$type, "<br>",
+                "Elevation:", only_us_aiports$elevation_ft)
+)
+
+```
+
 

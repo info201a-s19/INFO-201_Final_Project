@@ -5,18 +5,29 @@ date: "May 20, 2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-# Load results from the analysis
-source("scripts/first_chart.R")
-
+```{r, warning=FALSE, message=FALSE, echo=FALSE,include=FALSE}
+knitr::opts_chunk$set(echo = F)
 # Loading libraries
+library("dplyr")
 library("knitr")
 library("ggplot2")
 library("plotly")
 library("kableExtra")
 library("maps")
 library("leaflet")
+source("scripts/airports_table.R")
+source("scripts/first_chart.R")
+```
+## Introduction
+
+This report is about flights in the United States. We wanted to limit our scope in the United States rather than internationally to get a better sense of the flights around us. Knowing information about flights in the United States can benefit us if we travel. For example, we can find what airlines are usually delayed, so we could possibly avoid them in the future. The datasets we used are from (dataset 1 name)[link], and (dataset 2 name)[link].
+
+##Table
+
+This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of the airport of each region. Airport elevation means the highest point of an airport's usable landing area measured in feet above mean sea level. The table showes that Texas has the most number of airports. California has the highest average airport elevation. Since Florida airports have lower average elevation, we may assume that Florida airports are vulnerable to sea level rise. Therefore, many passengers may be suffering from climate change
+```{r busiest_airport, echo = F}
+  kable(busiest_airport, align = "c",
+        col.names = c("Region", "Number of airports", "Most common type of airports", "Average elevation in ft"))
 ```
 
 ```{r only_us_airports, echo = FALSE}

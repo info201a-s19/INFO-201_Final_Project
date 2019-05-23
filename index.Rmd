@@ -33,11 +33,11 @@ This table includes the top 10 regions that have the most airports. It also incl
 ```{r only_us_airports, echo = FALSE}
 us_map <- leaflet() %>% addTiles()
 us_map %>% addCircleMarkers(
-  lat = only_us_aiports$latitude_deg,
-  lng = only_us_aiports$longitude_deg
-  popup = paste("Name:", only_us_aiports$name, "<br>",
-                "Type:", only_us_aiports$type, "<br>",
-                "Elevation:", only_us_aiports$elevation_ft)
+  lat = only_us_airports$latitude_deg,
+  lng = only_us_airports$longitude_deg,
+  popup = paste("Name:", only_us_airports$name, "<br>",
+                "Type:", only_us_airports$type, "<br>",
+                "Elevation:", only_us_airports$elevation_ft)
 )
 
 ```

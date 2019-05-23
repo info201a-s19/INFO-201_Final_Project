@@ -7,11 +7,8 @@ library("ggplot2")
 library("plotly")
 library("tidyr")
 
-only_us_airpots <- us_airports %>%
-  filter(iso_country == "US")
-
-
-
+only_us_airports <- us_airports %>%
+  filter(iso_country == "US", longitude_deg < -50, latitude_deg > 15)
 
 
 # gg <- ggplot()

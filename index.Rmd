@@ -41,5 +41,3 @@ us_map %>% addCircleMarkers(
 )
 
 ```
-
-

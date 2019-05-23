@@ -20,7 +20,7 @@ source("scripts/first_chart.R")
 ```
 ## Introduction
 
-This report is about flights in the United States. We wanted to limit our scope in the United States rather than internationally to get a better sense of the flights around us. Knowing information about flights in the United States can benefit us if we travel. For example, we can find what airlines are usually delayed, so we could possibly avoid them in the future. The datasets we used are from (dataset 1 name)[link], and (dataset 2 name)[link].
+This report is about flights in the United States. We wanted to limit our scope in the United States rather than internationally to get a better sense of the flights around us. Knowing information about flights in the United States can benefit us if we travel. For example, we can find what airlines are usually delayed, so we could possibly avoid them in the future. The datasets we used are from (**OurAirports**)[http://ourairports.com/data/].
 
 ##Table
 

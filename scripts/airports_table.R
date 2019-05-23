@@ -1,5 +1,5 @@
 library("dplyr")
-airports_csv <- read.csv("data/airports.csv")
+airports_csv <- read.csv("scripts/airports.csv")
 
 #table
 busiest_airport <- airports_csv %>%

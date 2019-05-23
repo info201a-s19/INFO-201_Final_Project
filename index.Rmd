@@ -7,10 +7,16 @@ output: html_document
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE,include=FALSE}
 knitr::opts_chunk$set(echo = F)
-library(knitr)
-library(lintr)
+# Loading libraries
 library("dplyr")
+library("knitr")
+library("ggplot2")
+library("plotly")
+library("kableExtra")
+library("maps")
+library("leaflet")
 source("scripts/airports_table.R")
+source("scripts/first_chart.R")
 ```
 ## Introduction
 
@@ -18,9 +24,22 @@ This report is about flights in the United States. We wanted to limit our scope 
 
 ##Table
 
-This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of airport of each region. The table showes that Texas has the most number of airports. Sao Paulo, Brazil, has the highest average elevation of airports. 
+This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of the airport of each region. Airport elevation means the highest point of an airport's usable landing area measured in feet above mean sea level. The table showes that Texas has the most number of airports. California has the highest average airport elevation. Since Florida airports have lower average elevation, we may assume that Florida airports are vulnerable to sea level rise. Therefore, many passengers may be suffering from climate change
 ```{r busiest_airport, echo = F}
   kable(busiest_airport, align = "c",
         col.names = c("Region", "Number of airports", "Most common type of airports", "Average elevation in ft"))
 ```
+
+```{r only_us_airports, echo = FALSE}
+us_map <- leaflet() %>% addTiles()
+us_map %>% addCircleMarkers(
+  lat = only_us_aiports$latitude_deg,
+  lng = only_us_aiports$longitude_deg
+  popup = paste("Name:", only_us_aiports$name, "<br>",
+                "Type:", only_us_aiports$type, "<br>",
+                "Elevation:", only_us_aiports$elevation_ft)
+)
+
+```
+
 

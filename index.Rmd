@@ -27,7 +27,10 @@ This table includes the top 10 regions that have the most airports. This informa
 
 ```{r busiest_airport, echo = F}
   kable(busiest_airport, align = "c",
-        col.names = c("Region", "Number of airports", "Most common type of airports", "Average elevation in ft"))
+        col.names = c("Region","Number of airports",
+                      "Most common type of airports",
+                      "Average elevation in ft")) %>%
+  kable_styling(bootstrap_options = "striped")
 ```
 
 ## U.S. Map

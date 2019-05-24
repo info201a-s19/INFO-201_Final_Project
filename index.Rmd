@@ -16,7 +16,7 @@ library("kableExtra")
 library("maps")
 library("leaflet")
 source("scripts/airports_table.R")
-source("scripts/first_chart.R")
+source("scripts/us_map.R")
 ```
 ## Introduction
 
@@ -38,7 +38,8 @@ us_map %>% addCircleMarkers(
   popup = ~paste("Name:", name, "<br>",
                 "Type:", type, "<br>",
                 "Elevation:", elevation_ft),
-  radius = 0.01, weight = 0
+  radius = 0.01,
+  weight = 0
 )
 
 ```

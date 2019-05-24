@@ -22,7 +22,7 @@ source("scripts/us_map.R")
 
 This report is about flights in the United States. We wanted to limit our scope in the United States rather than internationally to get a better sense of the flights around us. Knowing information about flights in the United States can benefit us if we travel. For example, we can find what airlines are usually delayed, so we could possibly avoid them in the future. The datasets we used are from (**OurAirports**)[http://ourairports.com/data/].
 
-##Table
+## Table
 
 This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of the airport of each region. Airport elevation means the highest point of an airport's usable landing area measured in feet above mean sea level. The table showes that Texas has the most number of airports. California has the highest average airport elevation. Since Florida airports have lower average elevation, we may assume that Florida airports are vulnerable to sea level rise. Therefore, many passengers may be suffering from climate change
 ```{r busiest_airport, echo = F}
@@ -43,3 +43,7 @@ us_map %>% addCircleMarkers(
 )
 
 ```
+
+## Scatter Plot
+
+The following scatter plot was composed from data on Kaggle, called (**2015 Flight Delays and Cancellations**)[https://www.kaggle.com/usdot/flight-delays]. The scatter plot compares the arrival delays and departure delays of United Airlines and American Airlines' flights.

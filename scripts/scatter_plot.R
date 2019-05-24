@@ -13,5 +13,11 @@ delays <- flights %>%
 scatter_plot_of_delays <- plot_ly(
   data = delays,
   x = ~ARRIVAL_DELAY,
-  y = ~DEPARTURE_DELAY
+  y = ~DEPARTURE_DELAY,
+  type = "scatter",
+  mode = "markers",
+  text = ~paste("Airline: ", AIRLINE),
+  marker = list(
+    size = 1
+  )
 )

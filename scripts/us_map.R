@@ -16,16 +16,3 @@ types <- only_us_airports %>%
 
 airports <- only_us_airports %>%
   filter(type == "small_airport" | type == "medium_airport" | type == "large_airport")
-
-
-# gg <- ggplot()
-# gg <- gg + geom_polygon(data=only_us_airpots, aes(x=longitude_deg, y=latitude_deg, fill=NA), color = "black", fill=NA, size=0.5) +
-#   geom_point(mapping = aes(x=longitude_deg, y=latitude_deg, color="red"))
-# gg <- gg +  coord_map()
-# gg
-# 
-# us_map <- leaflet() %>% addTiles()
-# us_map %>% addCircleMarkers(
-#   lat = only_us_airpots$latitude_deg,
-#   lng = only_us_airpots$longitude_deg
-# )

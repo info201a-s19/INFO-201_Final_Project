@@ -1,5 +1,5 @@
 # Final Project
-Use this `README.md` file to describe your final project (as detailed on Canvas).
+Midpoint Deliverable: [Flights](https://info201a-s19.github.io/INFO-201_Final_Project/index.html)
 
 # Domain
 Flights in the United States

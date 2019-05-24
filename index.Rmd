@@ -20,6 +20,7 @@ library("leaflet")
 source("scripts/airports_table.R")
 source("scripts/us_map.R")
 source("scripts/stacked_bar_chart.R")
+source("scripts/scatter_plot.R")
 ```
 ## Introduction
 
@@ -48,16 +49,21 @@ us_map %>% addCircleMarkers(
 ```
 
 ```{r stacked_bar_chart, echo = FALSE}
-ggplot(data = filtered_flights, aes(x = MONTH, y = total_flights, fill = AIRLINE, text = paste("# of FLights: ", compare_airlines$count))) +
-  #geom_col(mapping = aes(x = MONTH, y = total_flights, fill = AIRLINE)) +
+num_flights_chart <- ggplot(data = compare_airlines, aes(x = MONTH, y = count, fill = AIRLINE, text = paste("# of Flights: ", count))) +
   ggtitle("Number of Flights across Months in 2015") +
   xlab("Months") + ylab("Number of Flights") +
   scale_x_discrete(limits=c("Jan","Feb","Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) +
+  scale_fill_discrete(name = "Airlines", labels = c("American Airlines (AA)", "Delta Airlines(DL)")) +
   scale_fill_manual(values = alpha(c("blue", "red"), 1)) +
   geom_bar(stat = "identity")
-ggplotly(tooltip = "text")
+ggplotly(num_flights_chart, tooltip = "text")
 ```
 
 ## Scatter Plot
 
 The following scatter plot was composed from data on Kaggle, called (**2015 Flight Delays and Cancellations**)[https://www.kaggle.com/usdot/flight-delays]. The scatter plot compares the arrival delays and departure delays of United Airlines and American Airlines' flights.
+
+```{r scatter_plot, echo = FALSE}
+#scatter_plot_of_delays
+```
+

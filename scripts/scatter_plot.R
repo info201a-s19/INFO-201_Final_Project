@@ -4,7 +4,7 @@ library(plotly)
 # This scatter plot compares arrival delays and departure delays
 
 # Data wrangling
-flights <- read.csv("../data/american_and_delta_airlines.csv", stringsAsFactors = F)
+flights <- read.csv("data/american_and_delta_airlines.csv", stringsAsFactors = F)
 delays <- flights %>%
   select(AIRLINE, ARRIVAL_DELAY, DEPARTURE_DELAY) %>%
   filter(!is.na(ARRIVAL_DELAY) & !is.na(DEPARTURE_DELAY))

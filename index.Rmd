@@ -38,6 +38,22 @@ This table includes the top 10 regions that have the most airports. It also incl
   kable_styling(bootstrap_options = "striped")
 ```
 
+## Stacked Bar Chart
+
+This stacked bar chart graphs the number of flights per month in 2015 by airline.
+```{r stacked_bar_chart, echo = FALSE}
+num_flights_chart <- ggplot(data = compare_airlines, aes(x = MONTH, y = count, fill = AIRLINE, text = paste("# of Flights: ", count))) +
+  ggtitle("Number of Flights across Months in 2015") +
+  xlab("Months") + ylab("Number of Flights") +
+  scale_x_discrete(limits=c("Jan","Feb","Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) +
+  scale_fill_manual(values = alpha(c("blue", "red"), 1)) +
+  geom_bar(stat = "identity")
+ggplotly(num_flights_chart, tooltip = "text")
+```
+
+## Location of airports on US map
+
+This map shows all the small, medium, and large airports in the United States. 
 ```{r only_us_airports, echo = FALSE}
 us_map <- leaflet(data = airports) %>% addTiles()
 us_map %>% addCircleMarkers(
@@ -49,16 +65,6 @@ us_map %>% addCircleMarkers(
   radius = 0.01,
   weight = 0
 )
-```
-
-```{r stacked_bar_chart, echo = FALSE}
-num_flights_chart <- ggplot(data = compare_airlines, aes(x = MONTH, y = count, fill = AIRLINE, text = paste("# of Flights: ", count))) +
-  ggtitle("Number of Flights across Months in 2015") +
-  xlab("Months") + ylab("Number of Flights") +
-  scale_x_discrete(limits=c("Jan","Feb","Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) +
-  scale_fill_manual(values = alpha(c("blue", "red"), 1)) +
-  geom_bar(stat = "identity")
-ggplotly(num_flights_chart, tooltip = "text")
 ```
 
 ## Scatter Plot

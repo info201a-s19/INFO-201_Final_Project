@@ -37,11 +37,17 @@ This table includes the top 10 regions that have the most airports. This informa
 
 **Q: Where do most of the airports lie in the United States?**
 
-This map shows all of the small, medium, and large airports in the United States. This information is from _[OurAirports](http://ourairports.com/data/)_. This includes Alaska and Hawaii. From looking at the map, we can see that the majority of airports are on the East side of the United States. The airports on the West side are concentrated mostly in Washington, Oregon and California. In Alaska, there seems to be a cluster of airports on the South side.
+This map shows all of the small, medium, and large airports in the United States. This information is from _[OurAirports](http://ourairports.com/data/)_. This includes Alaska and Hawaii.
 
 ```{r only_us_airports, echo = FALSE}
 us_map
 ```
+
+What this map tells us:
+
+* Most of the airports lie on the East side of the United States.
+* Airports on the West side are concentrated mostly in Washington, Oregon and California.
+* In Alaska, there seems to be a cluster of airports on the South side.
 
 ## Stacked Bar Chart
 
@@ -52,6 +58,12 @@ This stacked bar chart compares two popular airlines. One is American Airlines (
 ```{r stacked_bar_chart, echo = FALSE}
 ggplotly(num_flights_chart, tooltip = "text")
 ```
+
+What we can learn from this data:
+
+* We expected December to have the most flights, but based off the graph, it was surprising to see that October had more overall flights than December. July and August were a part of summer, where people are on vacation, so we were not surprised by them having the most flights.
+* The month with the most American Airline flights was `r month_with_most_aa_flights`. The month with the most Delta Airlines flights was `r month_with_most_dl_flights`, and the month with the most overall flights was `r month_with_most_flights`.
+* The month with the least overall flights was `r month_with_least_flights`. Many people were probably busy during this month, which was why people did not travel as much.
 
 ## Scatter Plot
 

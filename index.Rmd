@@ -16,6 +16,7 @@ source("scripts/airports_table.R")
 source("scripts/us_map.R")
 source("scripts/stacked_bar_chart.R")
 source("scripts/scatter_plot.R")
+source("scripts/airline_summary.R")
 ```
 ## Introduction
 

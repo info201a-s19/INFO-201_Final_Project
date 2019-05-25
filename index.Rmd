@@ -1,20 +1,15 @@
 ---
 title: "U.S. Flights"
 author: "Shareen C, Erya M, Sarah P, Jerome O"
-date: "May 20, 2019"
+date: "May 24, 2019"
 output: html_document
 ---
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE,include=FALSE}
 knitr::opts_chunk$set(echo = F)
 # Loading libraries
-library("dplyr")
 library("knitr")
-library("ggplot2")
-library("plotly")
 library("kableExtra")
-library("maps")
-library("leaflet")
 
 # Sourced File
 source("scripts/airports_table.R")
@@ -24,11 +19,11 @@ source("scripts/scatter_plot.R")
 ```
 ## Introduction
 
-This report is about flights in the United States. We wanted to limit our scope in the United States rather than internationally to get a better sense of the flights around us. Knowing information about flights in the United States can benefit us if we travel. For example, we can find what airlines are usually delayed, so we could possibly avoid them in the future. The datasets we used are from (**OurAirports**)[http://ourairports.com/data/].
+This report is about flights in the United States. We wanted to limit our scope in the United States rather than internationally to get a better sense of the flights around us. Knowing information about flights in the United States can benefit us if we travel. For example, we can find what airlines are usually delayed, so we could possibly avoid them in the future. The datasets we used are from _[OurAirports](http://ourairports.com/data/)_ and _[2015 Flight Delays and Cancellations](https://www.kaggle.com/usdot/flight-delays)_, from Kaggle.
 
 ## Table
 
-This table includes the top 10 regions that have the most airports. It also includes the most common type of airports and average elevation of the airport of each region. Airport elevation means the highest point of an airport's usable landing area measured in feet above mean sea level. The table showes that Texas has the most number of airports. California has the highest average airport elevation. Since Florida airports have lower average elevation, we may assume that Florida airports are vulnerable to sea level rise. Therefore, many passengers may be suffering from climate change
+This table includes the top 10 regions that have the most airports. This information is from _[OurAirports](http://ourairports.com/data/)_. It also includes the most common type of airports and average elevation of the airport of each region. Airport elevation is the highest point of an airport's usable landing area measured in feet above mean sea level. The table shows that Texas has the most number of airports. California has the highest average airport elevation. Since Florida airports have lower average elevation, we may assume that Florida airports are vulnerable to sea level rise. Therefore, many passengers may be suffering from climate change.
 
 ```{r busiest_airport, echo = F}
   kable(busiest_airport, align = "c",
@@ -38,40 +33,38 @@ This table includes the top 10 regions that have the most airports. It also incl
   kable_styling(bootstrap_options = "striped")
 ```
 
-## Stacked Bar Chart
+## U.S. Map
 
-This stacked bar chart graphs the number of flights per month in 2015 by airline.
-```{r stacked_bar_chart, echo = FALSE}
-num_flights_chart <- ggplot(data = compare_airlines, aes(x = MONTH, y = count, fill = AIRLINE, text = paste("# of Flights: ", count))) +
-  ggtitle("Number of Flights across Months in 2015") +
-  xlab("Months") + ylab("Number of Flights") +
-  scale_x_discrete(limits=c("Jan","Feb","Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) +
-  scale_fill_manual(values = alpha(c("blue", "red"), 1)) +
-  geom_bar(stat = "identity")
-ggplotly(num_flights_chart, tooltip = "text")
+**Q: Where do most of the airports lie in the United States?**
+
+This map shows all of the small, medium, and large airports in the United States. This information is from _[OurAirports](http://ourairports.com/data/)_. This includes Alaska and Hawaii. From looking at the map, we can see that the majority of airports are on the East side of the United States. The airports on the West side are concentrated mostly in Washington, Oregon and California. In Alaska, there seems to be a cluster of airports on the South side.
+
+```{r only_us_airports, echo = FALSE}
+us_map
 ```
 
-## Location of airports on US map
+## Stacked Bar Chart
 
-This map shows all the small, medium, and large airports in the United States. 
-```{r only_us_airports, echo = FALSE}
-us_map <- leaflet(data = airports) %>% addTiles()
-us_map %>% addCircleMarkers(
-  lat = ~latitude_deg,
-  lng = ~longitude_deg,
-  popup = ~paste("Name:", name, "<br>",
-                "Type:", type, "<br>",
-                "Elevation:", elevation_ft),
-  radius = 0.01,
-  weight = 0
-)
+**Q: Of the two most popular airlines, what was most popular during each part of the year?**
+
+This stacked bar chart compares two popular airlines. One is American Airlines (AA), and the other is Delta Airlines (DL). The data was found from _[2015 Flight Delays and Cancellations](https://www.kaggle.com/usdot/flight-delays)_ on Kaggle. This chart compares the number of flights between the two airlines across the months in 2015.
+
+```{r stacked_bar_chart, echo = FALSE}
+ggplotly(num_flights_chart, tooltip = "text")
 ```
 
 ## Scatter Plot
 
-The following scatter plot was composed from data on Kaggle, called (**2015 Flight Delays and Cancellations**)[https://www.kaggle.com/usdot/flight-delays]. The scatter plot compares the arrival delays and departure delays of United Airlines and American Airlines' flights.
+**Q: Is there a correlation between arrival delays and departure delays of flights?**
+
+The following scatter plot was composed from data on Kaggle, called _[2015 Flight Delays and Cancellations](https://www.kaggle.com/usdot/flight-delays)_. The scatter plot compares the arrival delays and departure delays of the flights of Delta Airlines and American Airlines. The scatter plot uses a random sample of **50 observations** from both the flights of Delta Airlines and American Airlines. Negative values means the flight was early by arrival or departure, and positive values means the flight was late by arrival or departure. A value of 0 means that the flight was on time.
 
 ```{r scatter_plot, echo = FALSE}
-#scatter_plot_of_delays
+scatter_plot_of_delays
 ```
 
+Some insights from the plot:
+
+* Very high linear positive correlation between arrival delays and departure delays. This means that as an arrival delay increases, the departure delay increases as well.
+* There is not a significant difference between the delays of Delta Airlines and American Airlines.
+* Most flights seemed to arrive and depart on time or earlier.

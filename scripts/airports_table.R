@@ -1,9 +1,11 @@
 library("dplyr")
+library("lintr")
+
 airports_csv <- read.csv("data/airports.csv", stringsAsFactors = F)
 
-#table
-busiest_airport <- airports_csv %>% 
-  filter(iso_country == "US") %>% 
+# table
+busiest_airport <- airports_csv %>%
+  filter(iso_country == "US") %>%
   filter(!is.na(iso_region)) %>%
   group_by(iso_region) %>%
   summarise(

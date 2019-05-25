@@ -2,13 +2,12 @@ library("dplyr")
 library("ggplot2")
 library("lintr")
 
-# Stacked bar chart
-filtered_flights <- read.csv("data/american_and_delta_airlines.csv",
-                             stringsAsFactors = F)
+# Source in for American Airlines and Delta Airlines data
+source("scripts/datasets.R")
 
-total_flights <- nrow(filtered_flights)
+total_flights <- nrow(flights)
 
-compare_airlines <- filtered_flights %>%
+compare_airlines <- flights %>%
   group_by(MONTH, AIRLINE) %>%
   summarize(count = n())
 

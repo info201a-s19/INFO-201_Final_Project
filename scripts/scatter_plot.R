@@ -2,12 +2,13 @@ library(dplyr)
 library(plotly)
 library(lintr)
 
+# Source in American Airlines and Delta Airlines flights
+source("scripts/datasets.R")
+
 # This scatter plot compares arrival delays and departure delays
 # from American Airlines and Delta Airlines
 
 # Data wrangling
-flights <- read.csv("data/american_and_delta_airlines.csv",
-                    stringsAsFactors = F)
 delays <- flights %>%
   select(AIRLINE, ARRIVAL_DELAY, DEPARTURE_DELAY) %>%
   filter(!is.na(ARRIVAL_DELAY) & !is.na(DEPARTURE_DELAY))

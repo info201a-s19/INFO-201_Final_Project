@@ -59,7 +59,7 @@ information_page <- tabPanel(
   )
 )
 
-#map_page <- tabPanel()
+map_page <- tabPanel()
 
 # Page for scatter plot; compares delays of two airlines
 plot_page <- tabPanel(
@@ -106,16 +106,16 @@ plot_page <- tabPanel(
   )
 )
 
-#bar_chart_page <- tabPanel()
+bar_chart_page <- tabPanel()
 
-#summary_page <- tabPanel()
+summary_page <- tabPanel()
 
 proj_ui <- navbarPage(
   "Flights in the United States",
   information_page,
-  #map_page,
-  plot_page
-  #bar_chart_page,
-  #summary_page
+  map_page,
+  plot_page,
+  bar_chart_page,
+  summary_page
 )
 

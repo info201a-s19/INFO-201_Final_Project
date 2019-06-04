@@ -1,6 +1,12 @@
 source("app_ui.R")
 
 proj_server <- function(input, output) {
+  # Image of airplane
+  output$airplane <- renderText({
+    src <- "https://tinyurl.com/y2p3makn"
+    airplane_pic <- c('<img src="', src, '">')
+    airplane_pic
+  })
   # Scatter plot
   output$scatter_plot <- renderPlotly({
     scatter_plot_of_delays <- plot_ly(
@@ -21,5 +27,6 @@ proj_server <- function(input, output) {
         xaxis = list(title = "Arrival Delays (in minutes)"),
         yaxis = list(title = "Departure Delays (in minutes)")
       )
+    scatter_plot_of_delays
   })
 }

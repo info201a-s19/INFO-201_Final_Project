@@ -30,15 +30,33 @@ airline_delays <- list(
 )
 
 
-# Shiny User Interface#
+# Shiny User Interface #
 
 
 information_page <- tabPanel(
   "Introduction",
-  h1(strong("Flights in the United States")),
-  h2("By Shareen C, Erya M, Sarah P, Jerome O"),
-  tags$iframe(src = "https://media.giphy.com/media/AOQ1ekVBqBTt6/giphy.gif",
-           width = "730px", height = "405px")
+  h1(strong("Flights in the United States"), align = "center"),
+  h2("By Shareen C, Erya M, Sarah P, Jerome O", align = "center"),
+  htmlOutput("airplane", align = "center"),
+  br(),
+  p("This report is about flights in the United States. We wanted to limit
+    our scope in the United States rather than internationally to get a better
+    sense of the flights around us. Knowing information about flights in the
+    United States can benefit us if we travel. For example, we can find what
+    airlines are usually delayed, so we could possibly avoid them in the
+    future."),
+  p("The datasets we used are: "),
+  tags$ul(
+    tags$li(tags$a(
+      href = "https://www.kaggle.com/usdot/flight-delays",
+      "2015 Flight Delays and Cancellations"),
+      "found on Kaggle"
+      ),
+    tags$li(tags$a(
+      href = "http://ourairports.com/data/",
+      "OurAirports"), "compiled by David Megginson"
+    )
+  )
 )
 
 #map_page <- tabPanel()
@@ -47,13 +65,14 @@ information_page <- tabPanel(
 plot_page <- tabPanel(
   "Comparing Delays of Airlines",
   h1(strong(
-    "Q: Is there a correlation between arrival delays and departure delays?")),
+    "Q: Is there a correlation between arrival delays
+    and departure delays?", align = "center")),
   p("This chart compares arrival and departure delays of two airlines.
     All of the data was randomly sampled by 50 for each airline and was
     collected from ", em(tags$a(
       href = "https://www.kaggle.com/usdot/flight-delays",
       "2015 Flight Delays and Cancellations")),
-    ", found on Kaggle. The data shown is in minutes, negative values meaning
+    "from Kaggle. The data shown is in minutes, negative values meaning
      the airline arrived or departed early and positive value meaning a
      late arrival or departure."),
   sidebarLayout(

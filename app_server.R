@@ -1,15 +1,79 @@
 library("dplyr")
 library("ggplot2")
 library("airportr")
-library("leaflet")
 library("plotly")
-library("tidyverse")
 library("maps")
-library("geosphere")
+
+source("app_ui.R")
 
 july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 
 server <- function(input, output) {
+  # Image of airplane
+  output$airplane <- renderText({
+    src <- "https://tinyurl.com/y2p3makn"
+    airplane_pic <- c('<img src="', src, '">')
+    airplane_pic
+  })
+  # Scatter plot
+  output$scatter_plot <- renderPlotly({
+    scatter_plot_of_delays <- plot_ly(
+      data = do.call("rbind", airline_delays[input$delays]),
+      x = ~ARRIVAL_DELAY,
+      y = ~DEPARTURE_DELAY,
+      type = "scatter",
+      mode = "markers",
+      text = ~paste0("Airline: ", names(airline_delays[input$delays]),
+                     "<br>Arrival Delay: ", ARRIVAL_DELAY,
+                     "<br>Departure Delay: ", DEPARTURE_DELAY),
+      hoverinfo = "text",
+      color = ~AIRLINE,
+      colors = c("lightblue", "pink")
+    ) %>%
+      layout(
+        title = "Airlines' Delays by Arrival and Departure",
+        xaxis = list(title = "Arrival Delays (in minutes)"),
+        yaxis = list(title = "Departure Delays (in minutes)")
+      )
+    scatter_plot_of_delays
+  })
+  
+  # Stacked Bar chart
+  total_flights <- nrow(flights)
+  
+  compare_airlines <- flights %>%
+    group_by(MONTH, AIRLINE) %>%
+    summarize(count = n())
+  
+  output$bar_chart <- renderPlotly({
+    num_flights_bar_chart <- ggplot(data = compare_airlines) +
+      aes(x = MONTH,
+          y = count,
+          fill = AIRLINE,
+          text = paste("# of Flights: ", count)) +
+    ggtitle("Number of Flights across Months in 2015") +
+    xlab("Months") + ylab("Number of Flights") +
+    scale_x_discrete(limits = c("Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec")) +
+    scale_fill_discrete(name = "Airlines", labels = c("American Airlines (AA)",
+                                                      "Delta Airlines (DL)")) +
+    scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
+    geom_bar(stat = "identity") +
+    theme(plot.title = element_text(hjust = 0.5)) # Center title
+  num_flights_bar_chart
+  })
+  
+  #Map
   output$july_map <- renderPlot({
     title <- paste0("Origin:", input$origin)
     data1 <- july_flight %>% filter(origin == input$origin)
@@ -33,7 +97,7 @@ server <- function(input, output) {
             axis.title.x=element_blank(),
             axis.title.y=element_blank(),
             axis.ticks=element_blank())
-  p
+    p
   })
 }
 

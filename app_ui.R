@@ -164,10 +164,11 @@ bar_chart_page <- tabPanel(
               had more overall flights than December. July and August were a
               part of summer, where people are on vacation, so we were not
               surprised by them having the most flights."),
-    tags$li("The month with the most American Airline flights was .
-              The month with the most Delta Airlines flights was ,
-              and the month with the most overall flights was ."),
-    tags$li("The month with the least overall flights was .
+    tags$li("The month with the most American Airline flights was July,
+              with 81434 flights. The month with the most Delta Airlines
+              flights was August, with 80947 flights, and the month with
+              the most overall flights was July, having 162175 flights."),
+    tags$li("The month with the least overall flights was February.
               Many people were probably busy during this month,
               which was why people did not travel as much.")
   )

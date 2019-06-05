@@ -16,7 +16,7 @@ unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
 usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
 
-# For Stacked Bar Chart
+# For Bar Chart
 total_flights <- nrow(flights)
 
 compare_airlines <- flights %>%
@@ -237,7 +237,47 @@ summary_page <- tabPanel(
     delay time exceeded 10 minutes for 6 months , even hitting its max at 14.18 minutes
     in June, for American Airlines. The average delay time exceeded 10 minutes for 3 
     months for Delta. While these comparisons were made for only one year, a customer
-    will experience less delays when flying with Delta Airlines throughout the year.")
+    will experience less delays when flying with Delta Airlines throughout the year."),
+  sidebarLayout(
+    sidebarPanel(
+      p("To compare delays between Alaska Airlines and
+        Delta Airlines, we visualized the data with a scatter plot. The plot
+        is set up so that the x-axis symbolizes arrival delay and the y-axis
+        sybmolizes departure delay. A value at 0 means the flight is on time,
+        while negative and positive numbers will determine earlier or later
+        arrivals respectively. From this plot, we can conclude that most
+        flights arrive earlier or on time and that there isn't a difference
+        in which airline will arrive earlier. Most of the points are located
+        in the third quadrant, meaning their arrival and departure times are
+        earlier than expected. While Delta Airlines has an outlier with a 201
+        min arrival delay, the next two outliers are from Alaska Arilines at
+        77 and 81 minutes. This comparison supports the argument that
+        while Alaska and Delta Airlines are popular airlines with devoted
+        customers, no airline is 'better' than the other in terms of
+        timeliness.")
+    ),
+    mainPanel(
+      plotlyOutput(outputId = "summary_plot")
+    )
+  ),
+  br(),
+  h2(strong("Correlation Between Arrival and Departure"), align = "center"),
+  sidebarLayout(
+    sidebarPanel(
+      p("We created a table to compare different airlines with arrivals and
+        departures longer than 60 minutes. We discovered that while most
+        airlines do depart on time, on time departures also mean that 
+        arrivals are later. A noticable example is that observations hover 
+        over the 0,0 mark because again, a value at 0 means the flight is on
+        time. This table is useful for two reasons. One, we discovered that
+        long departures are rare for Delta Airlines. And two, there is a
+        strong correlation between arrival and departure time. If a flight
+        departs late, it is most likely to arrive later.")
+    ),
+    mainPanel(
+      tableOutput(outputId = "summary_table")
+    )
+  )
 )
 
 proj_ui <- navbarPage(

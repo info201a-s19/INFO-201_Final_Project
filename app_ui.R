@@ -179,23 +179,29 @@ map_page <- tabPanel(
 summary_page <- tabPanel(
   h1(strong("A Summary of Our Analysis"), align = "center"),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
-  p("To compare delays between Alaska Airlines and 
+  p("To compare delays between Alaska Airlines and
     Delta Airlines, we visualized the data with a scatter plot. The plot
     is set up so that the x-axis symbolizes arrival delay and the y-axis
     sybmolizes departure delay. A value at 0 means the flight is on time,
     while negative and positive numbers will determine earlier or later
-    arrivals respectively. From this plot, we can conclude that most 
-    flights arrive earlier or on time and that there isn't a difference 
+    arrivals respectively. From this plot, we can conclude that most
+    flights arrive earlier or on time and that there isn't a difference
     in which airline will arrive earlier. Most of the points are located
     in the third quadrant, meaning their arrival and departure times are
     earlier than expected. While Delta Airlines has an outlier with a 201
-    min arrival delay, the next two outliers are from Alaska Arilines at 
+    min arrival delay, the next two outliers are from Alaska Arilines at
     77 and 81 minutes. This comparison supports the argument that
-    while Alaska and Delta Airlines are popular airlines with devoted 
+    while Alaska and Delta Airlines are popular airlines with devoted
     customers, no airline is 'better' than the other in terms of timeliness."),
   br(),
   h2(strong("Correlation Between Arrival and Departure"), align = "center"),
-  p(""),
+  p("We created a table to compare different airlines with arrivals and departures
+    longer than 60 minutes. We discovered that while most airlines do depart on time,
+    on time departures also mean that arrivals are later. A noticable example is that
+    observations hover over the 0,0 mark because again, a value at 0 means the flight
+    is on time. This table is useful for two reason. One, we discovered that long departures
+    are rare for Delta Airlines. And two, there is a strong correlation between arrival
+    and departure time. If a flight departs late, it is most likely to arrive later."),
   br(),
   h2(strong("Route Distribution in July"), align = "center"),
   p("The route distribution of flights in July are visualized on a map of

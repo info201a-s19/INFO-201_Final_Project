@@ -1,6 +1,14 @@
+library("dplyr")
+library("ggplot2")
+library("airportr")
+library("plotly")
+library("maps")
+
 source("app_ui.R")
 
-proj_server <- function(input, output) {
+july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
+
+server <- function(input, output) {
   # Image of airplane
   output$airplane <- renderText({
     src <- "https://tinyurl.com/y2p3makn"
@@ -29,7 +37,14 @@ proj_server <- function(input, output) {
       )
     scatter_plot_of_delays
   })
-  
+  # Delays table
+  output$delays_table <- renderTable({
+    delays_of_60_min <- delays %>%
+      group_by(AIRLINE) %>%
+      filter(ARRIVAL_DELAY >= 60 & DEPARTURE_DELAY >= 60) %>%
+      summarize(COUNT = n())
+    delays_of_60_min
+  }, align = "c")
   # Stacked Bar chart
   total_flights <- nrow(flights)
   
@@ -69,6 +84,7 @@ proj_server <- function(input, output) {
       theme(plot.title = element_text(hjust = 0.5)) # Center title
   num_flights_bar_chart
   })
+<<<<<<< HEAD
   output$delay_bar_chart <- renderPlotly({
     delay_time_chart <- ggplot(data = delay_time_months,
                                     aes(x = MONTH,
@@ -93,5 +109,35 @@ proj_server <- function(input, output) {
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
     delay_time_chart
+=======
+  
+  #Map
+  output$july_map <- renderPlot({
+    title1 <- paste0("Origin: ", input$origin)
+    data1 <- july_flight %>% filter(origin == input$origin)
+    usmap <- borders("state", colour="slategrey", fill="lightskyblue")
+    p <- ggplot() + usmap +
+      geom_curve(data = data1,
+                 aes(y = ori_latitude, x= ori_longitude,
+                     yend = desti_latitude, xend = desti_longitude),
+                 size = 0.5,
+                 curvature = 0.2) +
+      geom_point(data = data1,
+                 aes(y = ori_latitude, x = ori_longitude),
+                 colour="violet",
+                 size=1.5) +
+      geom_point(data = data1,
+                 aes(y = desti_latitude, x = desti_longitude),
+                 colour = "violet") +
+      theme(axis.line=element_blank(),
+            axis.text.x = element_blank(),
+            axis.text.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks = element_blank()) +
+      labs(title = title1)
+    p
+>>>>>>> 731fb6bfb662dd788762757f63b973fe050089ac
   })
 }
+

@@ -9,9 +9,25 @@ library("maps")
 source("scripts/datasets.R")
 
 # Data wrangling space #
+
+# For Map
 july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
+
+# For Stacked Bar Chart
+total_flights <- nrow(flights)
+
+compare_airlines <- flights %>%
+  group_by(MONTH, AIRLINE) %>%
+  summarize(count = n())
+
+delay_time_months <- flights %>%
+  select(MONTH, DEPARTURE_DELAY, AIRLINE) %>%
+  group_by(MONTH, AIRLINE) %>%
+  summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
+
+airline_name <- unique(delay_time_months$AIRLINE)
 
 # All airlines and their delays, each with a random sample of 50
 airline_delays <- list(
@@ -118,8 +134,6 @@ plot_page <- tabPanel(
 )
 
 # Bar Chart
-airline_name <- unique(delay_time_months$AIRLINE)
-
 bar_chart_page <- tabPanel(
   "Bar Chart",
   h1(strong(
@@ -129,7 +143,7 @@ bar_chart_page <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       checkboxGroupInput(
-        inputId = "delays",
+        inputId = "flights",
         label = "Choose which airlines to display",
         choices = airline_name,
         selected = airline_name
@@ -138,21 +152,21 @@ bar_chart_page <- tabPanel(
     mainPanel(
       plotlyOutput(outputId = "bar_chart"),
       plotlyOutput(outputId = "delay_bar_chart")
-    ),
-    p("What we can learn from this data:"),
-    tags$ul(
-      tags$li("We expected December to have the most flights,
+    )
+  ),
+  p("What we can learn from this data:"),
+  tags$ul(
+    tags$li("We expected December to have the most flights,
               but based off the graph, it was surprising to see that October
               had more overall flights than December. July and August were a
               part of summer, where people are on vacation, so we were not
               surprised by them having the most flights."),
-      tags$li("The month with the most American Airline flights was .
+    tags$li("The month with the most American Airline flights was .
               The month with the most Delta Airlines flights was ,
               and the month with the most overall flights was ."),
-      tags$li("The month with the least overall flights was .
+    tags$li("The month with the least overall flights was .
               Many people were probably busy during this month,
               which was why people did not travel as much.")
-    )
   )
 )
 
@@ -177,6 +191,7 @@ map_page <- tabPanel(
 )
 
 summary_page <- tabPanel(
+  "Summary",
   h1(strong("A Summary of Our Analysis"), align = "center"),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
   p("To compare delays between Alaska Airlines and

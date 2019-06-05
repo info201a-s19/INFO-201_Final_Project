@@ -41,17 +41,6 @@ proj_server <- function(input, output) {
   }, align = "c")
 
   # Stacked Bar chart
-  total_flights <- nrow(flights)
-
-  compare_airlines <- flights %>%
-    group_by(MONTH, AIRLINE) %>%
-    summarize(count = n())
-
-  delay_time_months <- flights %>%
-    select(MONTH, DEPARTURE_DELAY, AIRLINE) %>%
-    group_by(MONTH, AIRLINE) %>%
-    summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
-
   output$bar_chart <- renderPlotly({
     num_flights_bar_chart <- ggplot(data = compare_airlines,
                                     aes(x = MONTH,

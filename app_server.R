@@ -15,9 +15,11 @@ proj_server <- function(input, output) {
       y = ~DEPARTURE_DELAY,
       type = "scatter",
       mode = "markers",
-      text = ~paste0("Airline: ", names(airline_delays[input$delays]),
-                     "<br>Arrival Delay: ", ARRIVAL_DELAY,
-                     "<br>Departure Delay: ", DEPARTURE_DELAY),
+      text = ~ paste0(
+        "Airline: ", names(airline_delays[input$delays]),
+        "<br>Arrival Delay: ", ARRIVAL_DELAY,
+        "<br>Departure Delay: ", DEPARTURE_DELAY
+      ),
       hoverinfo = "text",
       color = ~AIRLINE,
       colors = c("lightblue", "pink")
@@ -37,6 +39,7 @@ proj_server <- function(input, output) {
       summarize(COUNT = n())
     delays_of_60_min
   }, align = "c")
+
   # Stacked Bar chart
   total_flights <- nrow(flights)
 
@@ -103,32 +106,41 @@ proj_server <- function(input, output) {
     delay_time_chart
   })
 
-  #Map
+  # Map
   output$july_map <- renderPlot({
     title1 <- paste0("Origin: ", input$origin)
     data1 <- july_flight %>% filter(origin == input$origin)
-    usmap <- borders("state", colour="slategrey", fill="lightskyblue")
-    p <- ggplot() + usmap +
-      geom_curve(data = data1,
-                 aes(y = ori_latitude, x= ori_longitude,
-                     yend = desti_latitude, xend = desti_longitude),
-                 size = 0.5,
-                 curvature = 0.2) +
-      geom_point(data = data1,
-                 aes(y = ori_latitude, x = ori_longitude),
-                 colour="violet",
-                 size=1.5) +
-      geom_point(data = data1,
-                 aes(y = desti_latitude, x = desti_longitude),
-                 colour = "violet") +
-      theme(axis.line=element_blank(),
-            axis.text.x = element_blank(),
-            axis.text.y = element_blank(),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank(),
-            axis.ticks = element_blank()) +
+    usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
+    p <- ggplot() + usmap + 9
+    geom_curve(
+      data = data1,
+      aes(
+        y = ori_latitude, x = ori_longitude,
+        yend = desti_latitude, xend = desti_longitude
+      ),
+      size = 0.5,
+      curvature = 0.2
+    ) +
+      geom_point(
+        data = data1,
+        aes(y = ori_latitude, x = ori_longitude),
+        colour = "violet",
+        size = 1.5
+      ) +
+      geom_point(
+        data = data1,
+        aes(y = desti_latitude, x = desti_longitude),
+        colour = "violet"
+      ) +
+      theme(
+        axis.line = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank()
+      ) +
       labs(title = title1)
     p
   })
 }
-

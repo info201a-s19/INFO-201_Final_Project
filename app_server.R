@@ -46,7 +46,12 @@ proj_server <- function(input, output) {
                                     aes(x = MONTH,
                                         y = NUM_FLIGHTS,
                                         fill = AIRLINE,
-                                        text = paste("# of Flights: ", NUM_FLIGHTS))) +
+                                        text = paste0("Airline: ",
+                                                      names(
+                                                        american_delta_airlines
+                                                        [input$flights]),
+                                                      "<br># of Flights: ",
+                                                      NUM_FLIGHTS))) +
       geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Number of Flights across Months in 2015") +
       xlab("Months") + ylab("Number of Flights") +
@@ -66,7 +71,7 @@ proj_server <- function(input, output) {
                                                       "Delta Airlines (DL)")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-  num_flights_bar_chart
+    ggplotly(num_flights_bar_chart, tooltip = "text")
   })
 
   output$delay_bar_chart <- renderPlotly({
@@ -74,7 +79,15 @@ proj_server <- function(input, output) {
                                     aes(x = MONTH,
                                         y = DELAY_MEAN,
                                         fill = AIRLINE,
-                                        text = paste("Delay Time Average: ", DELAY_MEAN))) +
+                                        text = paste0("Airline: ",
+                                                      names(
+                                                        american_delta_airlines
+                                                        [input$flights]),
+                                                      "<br>Mean Delay in min:",
+                                                      " ",
+                                                      round(
+                                                        DELAY_MEAN,
+                                                        digits = 2)))) +
       geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Delay Time Average across Months in 2015") +
       xlab("Months") + ylab("Delay Time Average (minutes)") +
@@ -92,7 +105,7 @@ proj_server <- function(input, output) {
                                   "Dec")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-      delay_time_chart
+    ggplotly(delay_time_chart, tooltip = "text")
   })
 
   # Map

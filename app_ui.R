@@ -8,10 +8,8 @@ library("maps")
 # Source for all datasets
 source("scripts/datasets.R")
 
-
 # Data wrangling space #
-
-unique_day_of_week <- unique(sea_jan_airports$DAY_OF_WEEK)
+july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
 
@@ -35,7 +33,6 @@ airline_delays <- list(
 
 
 # Shiny User Interface #
-
 
 information_page <- tabPanel(
   "Introduction",
@@ -120,48 +117,50 @@ plot_page <- tabPanel(
   )
 )
 
+# Bar Chart
+airline_name <- unique(delay_time_months$AIRLINE)
+
 bar_chart_page <- tabPanel(
-  "Stacked Bar Chart",
-  h1(strong(
-    "Q: Is there a correlation between arrival delays
-    and departure delays?", align = "center")),
-  p("This chart shows the number of Flights between American and Delta Airlines
-    throughout the year 2015."),
-  sidebarLayout(
-    sidebarPanel(
-      checkboxGroupInput(
-        inputId = "delays",
-        label = "Choose which airlines to display",
-        choices = names(airline_delays),
-        selected = names(airline_delays)
-      )
-    ),
-    mainPanel(
-      plotlyOutput(outputId = "bar_chart")
-    )
-  )
-)
+   "Bar Chart",
+   h1(strong(
+    "Q: Throughout the year, which ?", align = "center")),
+   p("This chart shows the number of Flights between American and Delta Airlines
+     throughout the year 2015."),
+   sidebarLayout(
+     sidebarPanel(
+       checkboxGroupInput(
+         inputId = "delays",
+         label = "Choose which airlines to display",
+         choices = airline_name,
+         selected = airline_name
+       )
+     ),
+     mainPanel(
+       plotlyOutput(outputId = "bar_chart"),
+       plotlyOutput(outputId = "delay_bar_chart")
+     )
+   )
+ )
 
 map_page <- tabPanel(
-  "Route Map",
-  
-  h1(strong(
-    "Q: Where can you fly from these airports?", align = "certer")),
-  p("This map shows the route distribution of each airport in July"),
-  sidebarLayout(
-    sidebarPanel(
-    selectInput(
-      "origin",
-      label = "Choose an Origin",
-      choices = unique_origin,
-      selected = "LAX"
-    )
-    ),
-    mainPanel(
-      plotOutput(outputId = "july_map")
-    )
-  )
-)
+   "Route Map",
+   h1(strong(
+     "Q: Where can you fly from these airports?", align = "certer")),
+   p("This map shows the route distribution of each airport in July"),
+   sidebarLayout(
+     sidebarPanel(
+     selectInput(
+       "origin",
+       label = "Choose an Origin",
+       choices = unique_origin,
+       selected = "LAX"
+     )
+     ),
+     mainPanel(
+       plotOutput(outputId = "july_map")
+     )
+   )
+ )
 
 #summary_page <- tabPanel()
 

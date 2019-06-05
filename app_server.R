@@ -1,7 +1,5 @@
 source("app_ui.R")
 
-july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
-
 proj_server <- function(input, output) {
   # Image of airplane
   output$airplane <- renderText({
@@ -41,39 +39,70 @@ proj_server <- function(input, output) {
   }, align = "c")
   # Stacked Bar chart
   total_flights <- nrow(flights)
-  
+
   compare_airlines <- flights %>%
     group_by(MONTH, AIRLINE) %>%
     summarize(count = n())
-  
+
+  delay_time_months <- flights %>%
+    select(MONTH, DEPARTURE_DELAY, AIRLINE) %>%
+    group_by(MONTH, AIRLINE) %>%
+    summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
+
   output$bar_chart <- renderPlotly({
-    num_flights_bar_chart <- ggplot(data = compare_airlines) +
-      aes(x = MONTH,
-          y = count,
-          fill = AIRLINE,
-          text = paste("# of Flights: ", count)) +
-    ggtitle("Number of Flights across Months in 2015") +
-    xlab("Months") + ylab("Number of Flights") +
-    scale_x_discrete(limits = c("Jan",
-                                "Feb",
-                                "Mar",
-                                "Apr",
-                                "May",
-                                "Jun",
-                                "Jul",
-                                "Aug",
-                                "Sep",
-                                "Oct",
-                                "Nov",
-                                "Dec")) +
-    scale_fill_discrete(name = "Airlines", labels = c("American Airlines (AA)",
+    num_flights_bar_chart <- ggplot(data = compare_airlines,
+                                    aes(x = MONTH,
+                                        y = count,
+                                        fill = AIRLINE,
+                                        text = paste("# of Flights: ", count))) +
+      geom_bar(stat = "identity", position = 'dodge') +
+      ggtitle("Number of Flights across Months in 2015") +
+      xlab("Months") + ylab("Number of Flights") +
+      scale_x_discrete(limits = c("Jan",
+                                  "Feb",
+                                  "Mar",
+                                  "Apr",
+                                  "May",
+                                  "Jun",
+                                  "Jul",
+                                  "Aug",
+                                  "Sep",
+                                  "Oct",
+                                  "Nov",
+                                  "Dec")) +
+      scale_fill_discrete(name = "Airlines", labels = c("American Airlines (AA)",
                                                       "Delta Airlines (DL)")) +
-    scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
-    geom_bar(stat = "identity") +
-    theme(plot.title = element_text(hjust = 0.5)) # Center title
+      scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
+      theme(plot.title = element_text(hjust = 0.5)) # Center title
   num_flights_bar_chart
   })
-  
+
+  output$delay_bar_chart <- renderPlotly({
+    delay_time_chart <- ggplot(data = delay_time_months,
+                                    aes(x = MONTH,
+                                        y = DELAY_MEAN,
+                                        fill = AIRLINE,
+                                        text = paste("Delay Time Average: ", DELAY_MEAN))) +
+      geom_bar(stat = "identity", position = 'dodge') +
+      ggtitle("Delay Time Average across Months in 2015") +
+      xlab("Months") + ylab("Delay Time Average (minutes)") +
+      scale_x_discrete(limits = c("Jan",
+                                  "Feb",
+                                  "Mar",
+                                  "Apr",
+                                  "May",
+                                  "Jun",
+                                  "Jul",
+                                  "Aug",
+                                  "Sep",
+                                  "Oct",
+                                  "Nov",
+                                  "Dec")) +
+      scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
+      theme(plot.title = element_text(hjust = 0.5)) # Center title
+    delay_time_chart
+  })
+
   #Map
   output$july_map <- renderPlot({
     title1 <- paste0("Origin: ", input$origin)

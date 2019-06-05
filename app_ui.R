@@ -17,6 +17,10 @@ unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
 usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
 
+dest_airports <- july_flight %>%
+  group_by(destination) %>%
+  summarize(count = n())
+most_flown_to <- max(dest_airports$count)
 # For Bar Chart
 total_flights <- nrow(flights)
 
@@ -69,15 +73,17 @@ information_page <- tabPanel(
     future."),
   p("The datasets we used are: "),
   tags$ul(
-    tags$li(tags$a(
-      href = "https://www.kaggle.com/usdot/flight-delays",
-      "2015 Flight Delays and Cancellations"),
-      "found on Kaggle"
+    tags$li(
+      tags$a(
+        href = "https://www.kaggle.com/usdot/flight-delays",
+        "2015 Flight Delays and Cancellations"
       ),
+      "found on Kaggle"
+    ),
     tags$li(tags$a(
       href = "http://ourairports.com/data/",
-      "OurAirports"), "compiled by David Megginson"
-    )
+      "OurAirports"
+    ), "compiled by David Megginson")
   ),
   h2("Some questions we seek to answer within our report: "),
   tags$ul(
@@ -92,18 +98,23 @@ information_page <- tabPanel(
 plot_page <- tabPanel(
   "Comparing Delays of Airlines",
   h1(strong(
-    "Q: What airlines are most likely to have delays?", align = "center")),
-  p("This chart compares arrival and departure delays of various airlines.
+    "Q: What airlines are most likely to have delays?",
+    align = "center"
+  )),
+  p(
+    "This chart compares arrival and departure delays of various airlines.
     All of the data was randomly sampled by 50 for each airline and was
     collected from ", em(tags$a(
       href = "https://www.kaggle.com/usdot/flight-delays",
-      "2015 Flight Delays and Cancellations")),
+      "2015 Flight Delays and Cancellations"
+    )),
     "from Kaggle. The data shown is in minutes, negative values meaning
     the airline arrived or departed early and positive value meaning a
     late arrival or departure. Knowing which airlines have delays is
     important because it helps us make decisions on which airline
     to take when traveling. If we know what airlines are most likely
-    to have delays, then we can take other airlines instead."),
+    to have delays, then we can take other airlines instead."
+  ),
   sidebarLayout(
     sidebarPanel(
       checkboxGroupInput(
@@ -149,8 +160,10 @@ plot_page <- tabPanel(
 bar_chart_page <- tabPanel(
   "Bar Chart",
   h1(strong(
-    "Q: Throughout the year, which month do people fly most and do airlines delay more
-     as number of flights increase?", align = "center")),
+    "Q: Throughout the year, which month do people fly most and do airlines
+     delay more as number of flights increase?",
+    align = "center"
+  )),
   p("This chart shows the number of Flights between American and Delta Airlines
     throughout the year 2015."),
   sidebarLayout(
@@ -170,46 +183,58 @@ bar_chart_page <- tabPanel(
   p("What we can learn from this data:"),
   tags$ul(
     tags$li("We expected December to have the most flights,
-              but based off the graph, it was surprising to see that October
-              had more overall flights than December. July and August were a
-              part of summer, where people are on vacation, so we were not
-              surprised by them having the most flights."),
-    tags$li("The month with the most American Airline flights was July,
-              with 81434 flights. The month with the most Delta Airlines
-              flights was August, with 80947 flights, and the month with
-              the most overall flights was July, having 162175 flights."),
+            but based off the graph, it was surprising to see that October
+            had more overall flights than December. July and August were a
+            part of summer, where people are on vacation, so we were not
+            surprised by them having the most flights."),
+    tags$li("For the first half of the year, there are more Delta Airline
+            flights than American Airline flights. Perhaps this is because
+            American Airlines have a longer delay time their flights making
+            customers that fly during unpopular months go to other airlines
+            that depart more time. Since, people flying in unpopular months are
+            probably people flying for short business trips, so being on time is
+            extremely important to them"),
+    tags$li("One aspect that we have not consider is the prices of the flights.
+            Since our data does not include the price for each flight, we are
+            making conclusions based on the data given to us such as the delay
+            departure time for certain airlines and the number of flights in a
+            given time"),
     tags$li("We found that June has the highest delay time average overall with
             a total of 25.06 minutes from both airlines. Although July has the
             most number of flights in a year, the delay time average was
-            significantly lower than the month before with only 17.99 minutes."),
+            significantly lower than the month before with only
+            17.99 minutes."),
     tags$li("Between American and Delta Airlines, we found that American
-            Arilines has a higher overall delay time in their flights.")
+            Arilines has a higher overall delay time in their flights.
+            Therefore, when booking flights especially in the summer, consumers
+            should consider which airline he or she would want to fly with if
+            being on time is a top priority")
   )
 )
 
 map_page <- tabPanel(
   "Route Map",
   h1(strong(
-<<<<<<< HEAD
     "Q: Where can you fly from these airports?", align = "certer")),
   p("This map shows the route distribution of each destination airport in July.
     By chooing an origin airport, you could find the busiest airport. "),
-=======
-    "Q: Where can you fly from these airports?", align = "center")),
-  p("This map shows the route distribution of each destination airport in July"),
->>>>>>> 14201c6a1ef1dfcf852c9ed1cba5ebd70b70055b
   sidebarLayout(
     sidebarPanel(
-    selectInput(
-      "origin",
-      label = "Choose an Origin",
-      choices = unique_origin,
-      selected = "LAX"
-    )
+      selectInput(
+        "origin",
+        label = "Choose an Origin",
+        choices = unique_origin,
+        selected = "LAX"
+      )
     ),
     mainPanel(
       plotOutput(outputId = "july_map")
     )
+  ),
+  p("What we can learn from this data:"),
+  tags$ul(
+    tags$li("We found that during July, the month with most flights, the most
+            popular destination is Atlanta with 126 flights going to Atlanta.")
   )
 )
 
@@ -281,8 +306,8 @@ summary_page <- tabPanel(
     sidebarPanel(
       p("We created a table to compare different airlines with arrivals and
         departures longer than 60 minutes. We discovered that while most
-        airlines do depart on time, on time departures also mean that 
-        arrivals are later. A noticable example is that observations hover 
+        airlines do depart on time, on time departures also mean that
+        arrivals are later. A noticable example is that observations hover
         over the 0,0 mark because again, a value at 0 means the flight is on
         time. This table is useful for two reasons. One, we discovered that
         long departures are rare for Delta Airlines. And two, there is a
@@ -303,4 +328,3 @@ proj_ui <- navbarPage(
   bar_chart_page,
   summary_page
 )
-

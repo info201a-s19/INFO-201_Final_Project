@@ -29,7 +29,14 @@ proj_server <- function(input, output) {
       )
     scatter_plot_of_delays
   })
-  
+  # Delays table
+  output$delays_table <- renderTable({
+    delays_of_60_min <- delays %>%
+      group_by(AIRLINE) %>%
+      filter(ARRIVAL_DELAY >= 60 & DEPARTURE_DELAY >= 60) %>%
+      summarize(COUNT = n())
+    delays_of_60_min
+  }, align = "c")
   # Stacked Bar chart
   total_flights <- nrow(flights)
   

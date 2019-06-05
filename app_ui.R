@@ -3,6 +3,7 @@ library("lintr")
 library("dplyr")
 library("ggplot2")
 library("plotly")
+library("maps")
 
 # Source for all datasets
 source("scripts/datasets.R")
@@ -164,7 +165,7 @@ map_page <- tabPanel(
 
 #summary_page <- tabPanel()
 
-ui <- navbarPage(
+proj_ui <- navbarPage(
   "Flights in the United States",
   information_page,
   map_page,

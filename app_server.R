@@ -1,14 +1,8 @@
-library("dplyr")
-library("ggplot2")
-library("airportr")
-library("plotly")
-library("maps")
-
 source("app_ui.R")
 
 july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 
-server <- function(input, output) {
+proj_server <- function(input, output) {
   # Image of airplane
   output$airplane <- renderText({
     src <- "https://tinyurl.com/y2p3makn"

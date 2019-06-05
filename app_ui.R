@@ -14,6 +14,7 @@ source("scripts/datasets.R")
 july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
+usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
 
 # For Stacked Bar Chart
 total_flights <- nrow(flights)

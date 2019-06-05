@@ -225,17 +225,19 @@ summary_page <- tabPanel(
     in the third quadrant, meaning their arrival and departure times are
     earlier than expected. For example, Delta Airlines has an outlier with a 41
     min arrival delay, but other points are concentrated near 0,0. This comparison 
-    supports the argument that while an airline is slightly 'better' than the other 
-    in terms of timeliness, late departures and arrivals are outliers at best."),
+    supports the argument that late departures and arrivals are outliers at best."),
   br(),
-  h2(strong("Correlation Between Arrival and Departure"), align = "center"),
-  p("We created a table to compare different airlines with arrivals and departures
-    longer than 60 minutes. We discovered that while most airlines do depart on time,
-    on time departures also mean that arrivals are later. A noticable example is that
-    observations hover over the 0,0 mark because again, a value at 0 means the flight
-    is on time. This table is useful for two reason. One, we discovered that long departures
-    are rare for Delta Airlines. And two, there is a strong correlation between arrival
-    and departure time. If a flight departs late, it is most likely to arrive later.")
+  h2(strong("Most Common Month for Flights"), align = "center"),
+  p("We compared data on American Airlines and Delta Airlines to discover when 
+    flights were most common and between these two, which airline had more delays.
+    We discovered that people travelled most frequently in the summer, especially
+    July for American Airlines and August for Delta Airlines. There were 81431
+    flights made in July and 80947 flights in August for the respective airlines.
+    We also discovered that American Airlines has a higher overall delay. The average
+    delay time exceeded 10 minutes for 6 months , even hitting its max at 14.18 minutes
+    in June, for American Airlines. The average delay time exceeded 10 minutes for 3 
+    months for Delta. While these comparisons were made for only one year, a customer
+    will experience less delays when flying with Delta Airlines throughout the year.")
 )
 
 proj_ui <- navbarPage(

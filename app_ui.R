@@ -10,6 +10,9 @@ source("scripts/datasets.R")
 
 # Data wrangling space #
 
+unique_day_of_week <- unique(sea_jan_airports$DAY_OF_WEEK)
+unique_desti <- unique(july_flight$origin)
+unique_origin <- unique(july_flight$destination)
 
 # All airlines and their delays, each with a random sample of 50
 airline_delays <- list(
@@ -58,8 +61,6 @@ information_page <- tabPanel(
     )
   )
 )
-
-map_page <- tabPanel()
 
 # Page for scatter plot; compares delays of two airlines
 plot_page <- tabPanel(
@@ -140,14 +141,35 @@ bar_chart_page <- tabPanel(
   )
 )
 
-summary_page <- tabPanel()
+map_page <- tabPanel(
+  "Route Map",
+  
+  h1(strong(
+    "Q: Where can you fly from these airports?", align = "certer")),
+  p("This map shows the route distribution of each airport in July"),
+  sidebarLayout(
+    sidebarPanel(
+    selectInput(
+      "origin",
+      label = "Choose an Origin",
+      choices = unique_origin,
+      selected = "LAX"
+    )
+    ),
+    mainPanel(
+      plotOutput(outputId = "july_map")
+    )
+  )
+)
 
-proj_ui <- navbarPage(
+#summary_page <- tabPanel()
+
+ui <- navbarPage(
   "Flights in the United States",
   information_page,
   map_page,
   plot_page,
-  bar_chart_page,
-  summary_page
+  bar_chart_page
+  #summary_page
 )
 

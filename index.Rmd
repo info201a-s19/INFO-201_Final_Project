@@ -24,7 +24,8 @@ This report is about flights in the United States. We wanted to limit our scope 
 
 ## Summary
 
-_[OurAirports](http://ourairports.com/data/)_ contains information on all the airports around the United States. Out of seaports, heliports, balloonports, closed, large, medium, and small airpors, small airports are the most common and here are `r airport_list$type` small airports, which are the most common types of airports around the country. `r airport_list$scheduled` of these airports do not schedule their services. _[2015 Flight Delays and Cancellations](https://www.kaggle.com/usdot/flight-delays)_, the other dataset, contains information on Alaska and Delta Airlines' flight information in one year. Delta flew `r flight_summary$airline_max` times this year, more than Alaska Airlines. This dataset shows that people travel the most frequently on the `r flight_summary$common_day`th day of the week, so Thursday. A total of `r flight_summary$max` flights were made on Thursday. 
+_[OurAirports](http://ourairports.com/data/)_ contains information on all the airports around the United States. Out of seaports, heliports, balloonports, closed, large, medium, and small airports, small airports are the most common. There are `r airport_list$type` small airports. 
+`r airport_list$scheduled` of these airports do not schedule their services. _[2015 Flight Delays and Cancellations](https://www.kaggle.com/usdot/flight-delays)_, the other dataset, contains information on Alaska and Delta Airlines' flight information in one year. Delta flew `r flight_summary$airline_max` times this year, more than Alaska Airlines. This dataset shows that people travel the most frequently on the `r flight_summary$common_day`th day of the week, so Thursday. A total of `r flight_summary$max` flights were made on Thursday. 
 
 ## Table
 

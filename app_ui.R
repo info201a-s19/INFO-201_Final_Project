@@ -235,9 +235,41 @@ summary_page <- tabPanel(
   h1(strong("A Summary of Our Analysis"), align = "center"),
   h2(strong("Route Distribution in July"), align = "center"),
   p("The route distribution of flights in July are visualized on a map of
-    the United States. The map consists of dots representing an"),
+    the United States. A dot represents an airport. We discovered that 
+    most of these dots are located near the coast or close to the 
+    destination airport. For example, a customer can fly to three
+    airports from ATW and these airports are in surrounding states. 
+    Other airports, such as ATL, reaches farther states and even 
+    those in Hawaii and on the west coast. This route distribution
+    suggests that bigger, more well-known airports such as JFK and
+    ORD, are more likely to distribute their flights nation-wide.
+    Smaller airports are more likely to fly to neighboring states."),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
   br(),
+  p("To compare delays between different airlines, we visualized the data 
+    with a scatter plot. The plot
+    is set up so that the x-axis symbolizes arrival delay and the y-axis
+    sybmolizes departure delay. A value at 0 means the flight is on time,
+    while negative and positive numbers will determine earlier or later
+    arrivals respectively. From this plot, we can conclude that most
+    flights arrive earlier or on time and that there isn't a difference
+    in which airline will arrive earlier. Most of the points are located
+    in the third quadrant, meaning their arrival and departure times are
+    earlier than expected. For example, Delta Airlines has an outlier with a 41
+    min arrival delay, but other points are concentrated near 0,0. This comparison 
+    supports the argument that late departures and arrivals are outliers at best."),
+  br(),
+  h2(strong("Most Common Month for Flights"), align = "center"),
+  p("We compared data on American Airlines and Delta Airlines to discover when 
+    flights were most common and between these two, which airline had more delays.
+    We discovered that people travelled most frequently in the summer, especially
+    July for American Airlines and August for Delta Airlines. There were 81431
+    flights made in July and 80947 flights in August for the respective airlines.
+    We also discovered that American Airlines has a higher overall delay. The average
+    delay time exceeded 10 minutes for 6 months , even hitting its max at 14.18 minutes
+    in June, for American Airlines. The average delay time exceeded 10 minutes for 3 
+    months for Delta. While these comparisons were made for only one year, a customer
+    will experience less delays when flying with Delta Airlines throughout the year."),
   sidebarLayout(
     sidebarPanel(
       p("To compare delays between Alaska Airlines and
@@ -277,11 +309,7 @@ summary_page <- tabPanel(
     mainPanel(
       tableOutput(outputId = "summary_table")
     )
-  ),
-  br(),
-  h2(strong("Route Distribution in July"), align = "center"),
-  p("The route distribution of flights in July are visualized on a map of
-    the United States. The map consists of dots representing an")
+  )
 )
 
 proj_ui <- navbarPage(

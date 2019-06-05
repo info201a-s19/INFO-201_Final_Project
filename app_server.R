@@ -15,7 +15,7 @@ proj_server <- function(input, output) {
       y = ~DEPARTURE_DELAY,
       type = "scatter",
       mode = "markers",
-      text = ~ paste0(
+      text = ~paste0(
         "Airline: ", names(airline_delays[input$delays]),
         "<br>Arrival Delay: ", ARRIVAL_DELAY,
         "<br>Departure Delay: ", DEPARTURE_DELAY
@@ -42,11 +42,16 @@ proj_server <- function(input, output) {
 
   # Stacked Bar chart
   output$bar_chart <- renderPlotly({
-    num_flights_bar_chart <- ggplot(data = compare_airlines,
+    num_flights_bar_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
                                     aes(x = MONTH,
-                                        y = count,
+                                        y = NUM_FLIGHTS,
                                         fill = AIRLINE,
-                                        text = paste("# of Flights: ", count))) +
+                                        text = paste0("Airline: ",
+                                                      names(
+                                                        american_delta_airlines
+                                                        [input$flights]),
+                                                      "<br># of Flights: ",
+                                                      NUM_FLIGHTS))) +
       geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Number of Flights across Months in 2015") +
       xlab("Months") + ylab("Number of Flights") +
@@ -66,15 +71,23 @@ proj_server <- function(input, output) {
                                                       "Delta Airlines (DL)")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-  num_flights_bar_chart
+    ggplotly(num_flights_bar_chart, tooltip = "text")
   })
 
   output$delay_bar_chart <- renderPlotly({
-    delay_time_chart <- ggplot(data = delay_time_months,
+    delay_time_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
                                     aes(x = MONTH,
                                         y = DELAY_MEAN,
                                         fill = AIRLINE,
-                                        text = paste("Delay Time Average: ", DELAY_MEAN))) +
+                                        text = paste0("Airline: ",
+                                                      names(
+                                                        american_delta_airlines
+                                                        [input$flights]),
+                                                      "<br>Mean Delay in min:",
+                                                      " ",
+                                                      round(
+                                                        DELAY_MEAN,
+                                                        digits = 2)))) +
       geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Delay Time Average across Months in 2015") +
       xlab("Months") + ylab("Delay Time Average (minutes)") +
@@ -92,15 +105,14 @@ proj_server <- function(input, output) {
                                   "Dec")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-    delay_time_chart
+    ggplotly(delay_time_chart, tooltip = "text")
   })
 
   # Map
   output$july_map <- renderPlot({
     title1 <- paste0("Origin: ", input$origin)
     data1 <- july_flight %>% filter(origin == input$origin)
-    usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
-    p <- ggplot() + usmap + 9
+    p <- ggplot() + usmap +
     geom_curve(
       data = data1,
       aes(
@@ -110,16 +122,16 @@ proj_server <- function(input, output) {
       size = 0.5,
       curvature = 0.2
     ) +
-      geom_point(
+      geom_point( # origin
         data = data1,
         aes(y = ori_latitude, x = ori_longitude),
         colour = "violet",
         size = 1.5
       ) +
-      geom_point(
+      geom_point( # destination
         data = data1,
         aes(y = desti_latitude, x = desti_longitude),
-        colour = "violet"
+        colour = "red"
       ) +
       theme(
         axis.line = element_blank(),

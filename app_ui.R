@@ -14,6 +14,7 @@ source("scripts/datasets.R")
 july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
+usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
 
 # For Stacked Bar Chart
 total_flights <- nrow(flights)
@@ -27,7 +28,10 @@ delay_time_months <- flights %>%
   group_by(MONTH, AIRLINE) %>%
   summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
 
-airline_name <- unique(delay_time_months$AIRLINE)
+american_delta_airlines <- list(
+  AmericanAirlines = filter(delay_time_months, AIRLINE == "AA"),
+  DeltaAirlines = filter(delay_time_months, AIRLINE == "DL")
+)
 
 # All airlines and their delays, each with a random sample of 50
 airline_delays <- list(
@@ -73,6 +77,13 @@ information_page <- tabPanel(
       href = "http://ourairports.com/data/",
       "OurAirports"), "compiled by David Megginson"
     )
+  ),
+  h2("Some questions we seek to answer within our report: "),
+  tags$ul(
+    tags$li("Where can you fly from airports in the United States?
+           Knowing airports with multiple destinations is helpful for travel"),
+    tags$li("What airlines are most likely to have delays? This information
+           is useful to know since we all want to avoid long delays.")
   )
 )
 
@@ -145,8 +156,8 @@ bar_chart_page <- tabPanel(
       checkboxGroupInput(
         inputId = "flights",
         label = "Choose which airlines to display",
-        choices = airline_name,
-        selected = airline_name
+        choices = names(american_delta_airlines),
+        selected = names(american_delta_airlines)
       )
     ),
     mainPanel(
@@ -161,10 +172,11 @@ bar_chart_page <- tabPanel(
               had more overall flights than December. July and August were a
               part of summer, where people are on vacation, so we were not
               surprised by them having the most flights."),
-    tags$li("The month with the most American Airline flights was .
-              The month with the most Delta Airlines flights was ,
-              and the month with the most overall flights was ."),
-    tags$li("The month with the least overall flights was .
+    tags$li("The month with the most American Airline flights was July,
+              with 81434 flights. The month with the most Delta Airlines
+              flights was August, with 80947 flights, and the month with
+              the most overall flights was July, having 162175 flights."),
+    tags$li("The month with the least overall flights was February.
               Many people were probably busy during this month,
               which was why people did not travel as much.")
   )
@@ -173,7 +185,7 @@ bar_chart_page <- tabPanel(
 map_page <- tabPanel(
   "Route Map",
   h1(strong(
-    "Q: Where can you fly from these airports?", align = "certer")),
+    "Q: Where can you fly from these airports?", align = "center")),
   p("This map shows the route distribution of each destination airport in July"),
   sidebarLayout(
     sidebarPanel(

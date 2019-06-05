@@ -77,6 +77,13 @@ information_page <- tabPanel(
       href = "http://ourairports.com/data/",
       "OurAirports"), "compiled by David Megginson"
     )
+  ),
+  h2("Some questions we seek to answer within our report: "),
+  tags$ul(
+    tagsli("Where can you fly from airports in the United States?
+           Knowing airports with multiple destinations is helpful for travel"),
+    tagsli("What airlines are most likely to have delays? This information
+           is useful to know since we all want to avoid long delays.")
   )
 )
 
@@ -178,7 +185,7 @@ bar_chart_page <- tabPanel(
 map_page <- tabPanel(
   "Route Map",
   h1(strong(
-    "Q: Where can you fly from these airports?", align = "certer")),
+    "Q: Where can you fly from these airports?", align = "center")),
   p("This map shows the route distribution of each destination airport in July"),
   sidebarLayout(
     sidebarPanel(

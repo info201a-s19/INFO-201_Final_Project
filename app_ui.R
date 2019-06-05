@@ -80,9 +80,9 @@ information_page <- tabPanel(
   ),
   h2("Some questions we seek to answer within our report: "),
   tags$ul(
-    tagsli("Where can you fly from airports in the United States?
+    tags$li("Where can you fly from airports in the United States?
            Knowing airports with multiple destinations is helpful for travel"),
-    tagsli("What airlines are most likely to have delays? This information
+    tags$li("What airlines are most likely to have delays? This information
            is useful to know since we all want to avoid long delays.")
   )
 )

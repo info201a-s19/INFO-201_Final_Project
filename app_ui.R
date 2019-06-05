@@ -194,6 +194,7 @@ summary_page <- tabPanel(
   "Summary",
   h1(strong("A Summary of Our Analysis"), align = "center"),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
+  br(),
   p("To compare delays between Alaska Airlines and
     Delta Airlines, we visualized the data with a scatter plot. The plot
     is set up so that the x-axis symbolizes arrival delay and the y-axis

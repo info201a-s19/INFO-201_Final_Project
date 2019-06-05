@@ -8,7 +8,7 @@ proj_server <- function(input, output) {
     airplane_pic
   })
   # Scatter plot
-  output$scatter_plot <- renderPlotly({
+  current_plot <- reactive({
     scatter_plot_of_delays <- plot_ly(
       data = do.call("rbind", airline_delays[input$delays]),
       x = ~ARRIVAL_DELAY,
@@ -31,15 +31,26 @@ proj_server <- function(input, output) {
       )
     scatter_plot_of_delays
   })
+  output$scatter_plot <- renderPlotly({
+    current_plot()
+  })
+  output$summary_plot <- renderPlotly({
+    current_plot()
+  })
   # Delays table
-  output$delays_table <- renderTable({
+  current_table <- reactive({
     delays_of_60_min <- delays %>%
       group_by(AIRLINE) %>%
       filter(ARRIVAL_DELAY >= 60 & DEPARTURE_DELAY >= 60) %>%
       summarize(COUNT = n())
     delays_of_60_min
+  })
+  output$delays_table <- renderTable({
+    current_table()
   }, align = "c")
-
+  output$summary_table <- renderTable({
+    current_table()
+  }, align = "c")
   # Stacked Bar chart
   output$bar_chart <- renderPlotly({
     num_flights_bar_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
@@ -122,16 +133,16 @@ proj_server <- function(input, output) {
       size = 0.5,
       curvature = 0.2
     ) +
-      geom_point(
+      geom_point( # origin
         data = data1,
         aes(y = ori_latitude, x = ori_longitude),
         colour = "violet",
         size = 1.5
       ) +
-      geom_point(
+      geom_point( # destination
         data = data1,
         aes(y = desti_latitude, x = desti_longitude),
-        colour = "violet"
+        colour = "red"
       ) +
       theme(
         axis.line = element_blank(),

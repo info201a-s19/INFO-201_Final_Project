@@ -65,16 +65,18 @@ map_page <- tabPanel()
 plot_page <- tabPanel(
   "Comparing Delays of Airlines",
   h1(strong(
-    "Q: Is there a correlation between arrival delays
-    and departure delays?", align = "center")),
-  p("This chart compares arrival and departure delays of two airlines.
+    "Q: What airlines are most likely to have delays?", align = "center")),
+  p("This chart compares arrival and departure delays of various airlines.
     All of the data was randomly sampled by 50 for each airline and was
     collected from ", em(tags$a(
       href = "https://www.kaggle.com/usdot/flight-delays",
       "2015 Flight Delays and Cancellations")),
     "from Kaggle. The data shown is in minutes, negative values meaning
-     the airline arrived or departed early and positive value meaning a
-     late arrival or departure."),
+    the airline arrived or departed early and positive value meaning a
+    late arrival or departure. Knowing which airlines have delays is
+    important because it helps us make decisions on which airline
+    to take when traveling. If we know what airlines are most likely
+    to have delays, then we can take other airlines instead."),
   sidebarLayout(
     sidebarPanel(
       checkboxGroupInput(
@@ -88,7 +90,17 @@ plot_page <- tabPanel(
       plotlyOutput(outputId = "scatter_plot")
     )
   ),
-  p("We can process a few key points from this data:"),
+  h2(strong("Here is a table showing the number of airlines with
+            arrival and departure delays longer than 60 minutes each")),
+  tableOutput("delays_table"),
+  h2(strong("What can we learn from this?", align = "center")),
+  p("The airline with the most delays longer than 60 minutes is JetBlue
+    Airways (B6), having 5 flights delayed longer than 60 minutes. Other
+    airlines with a notable number of long delays are Frontier Airlines (F9)
+    and Spirit Airlines (NK), both having 4 flights having long delays. The
+    only airline that did not have long delays was Delta Airlines (DL),
+    showing that Delta is a favorable airline to use to avoid long delays."),
+  p("We can process some other key points from this data:"),
   tags$ul(
     tags$li("There is a positive correlation between arrival delays and
             departure delays. This means that as arrival delays go up,

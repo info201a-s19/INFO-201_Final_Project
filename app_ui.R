@@ -148,7 +148,8 @@ plot_page <- tabPanel(
 bar_chart_page <- tabPanel(
   "Bar Chart",
   h1(strong(
-    "Q: Throughout the year, which ?", align = "center")),
+    "Q: Throughout the year, which month do people fly most and do airlines delay more
+     as number of flights increase?", align = "center")),
   p("This chart shows the number of Flights between American and Delta Airlines
     throughout the year 2015."),
   sidebarLayout(
@@ -176,9 +177,12 @@ bar_chart_page <- tabPanel(
               with 81434 flights. The month with the most Delta Airlines
               flights was August, with 80947 flights, and the month with
               the most overall flights was July, having 162175 flights."),
-    tags$li("The month with the least overall flights was February.
-              Many people were probably busy during this month,
-              which was why people did not travel as much.")
+    tags$li("We found that June has the highest delay time average overall with
+            a total of 25.06 minutes from both airlines. Although July has the
+            most number of flights in a year, the delay time average was
+            significantly lower than the month before with only 17.99 minutes."),
+    tags$li("Between American and Delta Airlines, we found that American
+            Arilines has a higher overall delay time in their flights.")
   )
 )
 
@@ -205,6 +209,9 @@ map_page <- tabPanel(
 summary_page <- tabPanel(
   "Summary",
   h1(strong("A Summary of Our Analysis"), align = "center"),
+  h2(strong("Route Distribution in July"), align = "center"),
+  p("The route distribution of flights in July are visualized on a map of
+    the United States. The map consists of dots representing an"),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
   br(),
   sidebarLayout(

@@ -27,7 +27,10 @@ delay_time_months <- flights %>%
   group_by(MONTH, AIRLINE) %>%
   summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
 
-airline_name <- unique(delay_time_months$AIRLINE)
+american_delta_airlines <- list(
+  AmericanAirlines = filter(delay_time_months, AIRLINE == "AA"),
+  DeltaAirlines = filter(delay_time_months, AIRLINE == "DL")
+)
 
 # All airlines and their delays, each with a random sample of 50
 airline_delays <- list(
@@ -145,8 +148,8 @@ bar_chart_page <- tabPanel(
       checkboxGroupInput(
         inputId = "flights",
         label = "Choose which airlines to display",
-        choices = airline_name,
-        selected = airline_name
+        choices = names(american_delta_airlines),
+        selected = names(american_delta_airlines)
       )
     ),
     mainPanel(

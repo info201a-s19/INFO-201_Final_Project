@@ -15,7 +15,7 @@ proj_server <- function(input, output) {
       y = ~DEPARTURE_DELAY,
       type = "scatter",
       mode = "markers",
-      text = ~ paste0(
+      text = ~paste0(
         "Airline: ", names(airline_delays[input$delays]),
         "<br>Arrival Delay: ", ARRIVAL_DELAY,
         "<br>Departure Delay: ", DEPARTURE_DELAY
@@ -42,11 +42,11 @@ proj_server <- function(input, output) {
 
   # Stacked Bar chart
   output$bar_chart <- renderPlotly({
-    num_flights_bar_chart <- ggplot(data = compare_airlines,
+    num_flights_bar_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
                                     aes(x = MONTH,
-                                        y = count,
+                                        y = NUM_FLIGHTS,
                                         fill = AIRLINE,
-                                        text = paste("# of Flights: ", count))) +
+                                        text = paste("# of Flights: ", NUM_FLIGHTS))) +
       geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Number of Flights across Months in 2015") +
       xlab("Months") + ylab("Number of Flights") +
@@ -70,7 +70,7 @@ proj_server <- function(input, output) {
   })
 
   output$delay_bar_chart <- renderPlotly({
-    delay_time_chart <- ggplot(data = delay_time_months,
+    delay_time_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
                                     aes(x = MONTH,
                                         y = DELAY_MEAN,
                                         fill = AIRLINE,
@@ -92,7 +92,7 @@ proj_server <- function(input, output) {
                                   "Dec")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-    delay_time_chart
+      delay_time_chart
   })
 
   # Map

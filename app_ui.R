@@ -77,6 +77,13 @@ information_page <- tabPanel(
       href = "http://ourairports.com/data/",
       "OurAirports"), "compiled by David Megginson"
     )
+  ),
+  h2("Some questions we seek to answer within our report: "),
+  tags$ul(
+    tags$li("Where can you fly from airports in the United States?
+           Knowing airports with multiple destinations is helpful for travel"),
+    tags$li("What airlines are most likely to have delays? This information
+           is useful to know since we all want to avoid long delays.")
   )
 )
 
@@ -182,7 +189,7 @@ bar_chart_page <- tabPanel(
 map_page <- tabPanel(
   "Route Map",
   h1(strong(
-    "Q: Where can you fly from these airports?", align = "certer")),
+    "Q: Where can you fly from these airports?", align = "center")),
   p("This map shows the route distribution of each destination airport in July"),
   sidebarLayout(
     sidebarPanel(
@@ -203,6 +210,7 @@ summary_page <- tabPanel(
   "Summary",
   h1(strong("A Summary of Our Analysis"), align = "center"),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
+  br(),
   p("To compare delays between Alaska Airlines and
     Delta Airlines, we visualized the data with a scatter plot. The plot
     is set up so that the x-axis symbolizes arrival delay and the y-axis

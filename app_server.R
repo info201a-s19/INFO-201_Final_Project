@@ -122,16 +122,16 @@ proj_server <- function(input, output) {
       size = 0.5,
       curvature = 0.2
     ) +
-      geom_point(
+      geom_point( # origin
         data = data1,
         aes(y = ori_latitude, x = ori_longitude),
         colour = "violet",
         size = 1.5
       ) +
-      geom_point(
+      geom_point( # destination
         data = data1,
         aes(y = desti_latitude, x = desti_longitude),
-        colour = "violet"
+        colour = "red"
       ) +
       theme(
         axis.line = element_blank(),

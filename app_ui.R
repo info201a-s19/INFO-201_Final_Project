@@ -6,7 +6,7 @@ library("plotly")
 
 # Source for all datasets
 source("scripts/datasets.R")
-source("app_server.r")
+source("app_server.R")
 
 # Data wrangling space #
 
@@ -34,11 +34,10 @@ airline_delays <- list(
 
 # Shiny User Interface #
 
-
 information_page <- tabPanel(
   "Introduction",
   h1(strong("Flights in the United States"), align = "center"),
-  h2("By Shareen C, Erya M, Sarah P, Jerome O", align = "center"),
+  h2("By Shareen C, Erya M, Jerome O, Sarah P", align = "center"),
   htmlOutput("airplane", align = "center"),
   br(),
   p("This report is about flights in the United States. We wanted to limit
@@ -118,11 +117,13 @@ plot_page <- tabPanel(
   )
 )
 
+# Bar Chart
+airline_name <- unique(delay_time_months$AIRLINE)
+
 bar_chart_page <- tabPanel(
-  "Stacked Bar Chart",
+  "Bar Chart",
   h1(strong(
-    "Q: Is there a correlation between arrival delays
-    and departure delays?", align = "center")),
+    "Q: Throughout the year, which ?", align = "center")),
   p("This chart shows the number of Flights between American and Delta Airlines
     throughout the year 2015."),
   sidebarLayout(
@@ -130,22 +131,36 @@ bar_chart_page <- tabPanel(
       checkboxGroupInput(
         inputId = "delays",
         label = "Choose which airlines to display",
-        choices = names(airline_delays),
-        selected = names(airline_delays)
+        choices = airline_name,
+        selected = airline_name
       )
     ),
     mainPanel(
-      plotlyOutput(outputId = "bar_chart")
+      plotlyOutput(outputId = "bar_chart"),
+      plotlyOutput(outputId = "delay_bar_chart")
+    ),
+    p("What we can learn from this data:"),
+    tags$ul(
+      tags$li("We expected December to have the most flights,
+              but based off the graph, it was surprising to see that October
+              had more overall flights than December. July and August were a
+              part of summer, where people are on vacation, so we were not
+              surprised by them having the most flights."),
+      tags$li("The month with the most American Airline flights was .
+              The month with the most Delta Airlines flights was ,
+              and the month with the most overall flights was ."),
+      tags$li("The month with the least overall flights was .
+              Many people were probably busy during this month,
+              which was why people did not travel as much.")
     )
   )
 )
 
 map_page <- tabPanel(
   "Route Map",
-  
   h1(strong(
     "Q: Where can you fly from these airports?", align = "certer")),
-  p("This map shows the route distribution of each airport in July"),
+  p("This map shows the route distribution of each destination airport in July"),
   sidebarLayout(
     sidebarPanel(
     selectInput(

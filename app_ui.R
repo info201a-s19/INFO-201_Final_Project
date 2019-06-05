@@ -3,12 +3,56 @@ library("plotly")
 library("lintr")
 library("dplyr")
 
-information_page <- tabPanel()
+unique_day_of_week <- unique(sea_jan_airports$DAY_OF_WEEK)
+unique_desti <- unique(july_flight$origin)
+unique_origin <- unique(july_flight$destination)
 
-map_page <- tabPanel()
+map_page <- tabPanel(
+  "Map Page",
+  
+  titlePanel("Map Page"),
+  
+  sidebarLayout(
+    selectInput(
+      "origin",
+      label = "Choose an Origin",
+      choices = unique_origin,
+      selected = "LAX"
+    ),
+    mainPanel(
+      plotOutput(outputId = "july_map")
+    )
+  )
+)
 
-plot_page <- tabPanel()
+ui <- navbarPage(
+  "Airport",
+  map_page
+)
 
-bar_chart_page <- tabPanel()
+# selectInput(
+#   inputId = "day_of_week",
+#   label = "Choose a day of week",
+#   choices = unique_day_of_week
+# )
 
-summary_page <- tabPanel()
+# map_page <- tabPanel(
+#   "Map Page",
+#   titlePanel("Map Page"),
+#   sidebarLayout(
+#     sidebarPanel(
+#       selectInput(
+#         inputId = "day_of_week",
+#         label = "Choose a day of week",
+#         choices = unique_day_of_week
+#       ),
+#       size_input <- sliderInput(
+#         "size",
+#         label = "Size of point", min = 1, max = 10, value = 5
+#       )
+#     )
+#   ),
+#   mainPanel(
+#     leafletOutput(outputId = "seattle-january_map")
+#   )
+# )

@@ -16,6 +16,10 @@ unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
 usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
 
+dest_airports <- july_flight %>%
+  group_by(destination) %>%
+  summarize(count = n())
+most_flown_to <- max(dest_airports$count)
 # For Bar Chart
 total_flights <- nrow(flights)
 
@@ -227,6 +231,11 @@ map_page <- tabPanel(
     mainPanel(
       plotOutput(outputId = "july_map")
     )
+  ),
+  p("What we can learn from this data:"),
+  tags$ul(
+    tags$li("We found that during July, the month with most flights, the most
+            popular destination is Atlanta with 126 flights going to Atlanta.")
   )
 )
 

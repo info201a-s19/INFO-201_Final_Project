@@ -112,8 +112,7 @@ proj_server <- function(input, output) {
   output$july_map <- renderPlot({
     title1 <- paste0("Origin: ", input$origin)
     data1 <- july_flight %>% filter(origin == input$origin)
-    usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
-    p <- ggplot() + usmap + 9
+    p <- ggplot() + usmap +
     geom_curve(
       data = data1,
       aes(

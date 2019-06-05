@@ -106,7 +106,27 @@ plot_page <- tabPanel(
   )
 )
 
-bar_chart_page <- tabPanel()
+bar_chart_page <- tabPanel(
+  "Stacked Bar Chart",
+  h1(strong(
+    "Q: Is there a correlation between arrival delays
+    and departure delays?", align = "center")),
+  p("This chart shows the number of Flights between American and Delta Airlines
+    throughout the year 2015."),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxGroupInput(
+        inputId = "delays",
+        label = "Choose which airlines to display",
+        choices = names(airline_delays),
+        selected = names(airline_delays)
+      )
+    ),
+    mainPanel(
+      plotlyOutput(outputId = "bar_chart")
+    )
+  )
+)
 
 summary_page <- tabPanel()
 

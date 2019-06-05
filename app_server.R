@@ -29,4 +29,39 @@ proj_server <- function(input, output) {
       )
     scatter_plot_of_delays
   })
+  
+  # Stacked Bar chart
+  total_flights <- nrow(flights)
+  
+  compare_airlines <- flights %>%
+    group_by(MONTH, AIRLINE) %>%
+    summarize(count = n())
+  
+  output$bar_chart <- renderPlotly({
+    num_flights_bar_chart <- ggplot(data = compare_airlines) +
+      aes(x = MONTH,
+          y = count,
+          fill = AIRLINE,
+          text = paste("# of Flights: ", count)) +
+    ggtitle("Number of Flights across Months in 2015") +
+    xlab("Months") + ylab("Number of Flights") +
+    scale_x_discrete(limits = c("Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec")) +
+    scale_fill_discrete(name = "Airlines", labels = c("American Airlines (AA)",
+                                                      "Delta Airlines (DL)")) +
+    scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
+    geom_bar(stat = "identity") +
+    theme(plot.title = element_text(hjust = 0.5)) # Center title
+  num_flights_bar_chart
+  })
 }

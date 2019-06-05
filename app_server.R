@@ -84,7 +84,7 @@ server <- function(input, output) {
       theme(plot.title = element_text(hjust = 0.5)) # Center title
   num_flights_bar_chart
   })
-<<<<<<< HEAD
+  
   output$delay_bar_chart <- renderPlotly({
     delay_time_chart <- ggplot(data = delay_time_months,
                                     aes(x = MONTH,
@@ -109,7 +109,7 @@ server <- function(input, output) {
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
     delay_time_chart
-=======
+  })
   
   #Map
   output$july_map <- renderPlot({
@@ -137,7 +137,6 @@ server <- function(input, output) {
             axis.ticks = element_blank()) +
       labs(title = title1)
     p
->>>>>>> 731fb6bfb662dd788762757f63b973fe050089ac
   })
 }
 

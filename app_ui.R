@@ -4,6 +4,7 @@ library("dplyr")
 library("ggplot2")
 library("plotly")
 library("maps")
+library("usmap")
 
 # Source for all datasets
 source("scripts/datasets.R")
@@ -179,7 +180,8 @@ map_page <- tabPanel(
   "Route Map",
   h1(strong(
     "Q: Where can you fly from these airports?", align = "certer")),
-  p("This map shows the route distribution of each destination airport in July"),
+  p("This map shows the route distribution of each destination airport in July.
+    By chooing an origin airport, you could find the busiest airport. "),
   sidebarLayout(
     sidebarPanel(
     selectInput(

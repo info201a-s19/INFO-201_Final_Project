@@ -16,7 +16,7 @@ unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
 usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
 
-# For Stacked Bar Chart
+# For Bar Chart
 total_flights <- nrow(flights)
 
 compare_airlines <- flights %>%

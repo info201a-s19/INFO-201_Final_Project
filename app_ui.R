@@ -6,11 +6,10 @@ library("plotly")
 
 # Source for all datasets
 source("scripts/datasets.R")
-
+source("app_server.r")
 
 # Data wrangling space #
 
-unique_day_of_week <- unique(sea_jan_airports$DAY_OF_WEEK)
 unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
 

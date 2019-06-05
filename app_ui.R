@@ -32,7 +32,6 @@ airline_delays <- list(
 
 # Shiny User Interface #
 
-
 information_page <- tabPanel(
   "Introduction",
   h1(strong("Flights in the United States"), align = "center"),
@@ -59,7 +58,7 @@ information_page <- tabPanel(
   )
 )
 
-map_page <- tabPanel()
+#map_page <- tabPanel()
 
 # Page for scatter plot; compares delays of two airlines
 plot_page <- tabPanel(
@@ -106,11 +105,13 @@ plot_page <- tabPanel(
   )
 )
 
+# Bar Chart
+airline_name <- unique(delay_time_months$AIRLINE)
+
 bar_chart_page <- tabPanel(
-  "Stacked Bar Chart",
+  "Bar Chart",
   h1(strong(
-    "Q: Is there a correlation between arrival delays
-    and departure delays?", align = "center")),
+    "Q: Throughout the year, which ?", align = "center")),
   p("This chart shows the number of Flights between American and Delta Airlines
     throughout the year 2015."),
   sidebarLayout(
@@ -118,24 +119,25 @@ bar_chart_page <- tabPanel(
       checkboxGroupInput(
         inputId = "delays",
         label = "Choose which airlines to display",
-        choices = names(airline_delays),
-        selected = names(airline_delays)
+        choices = airline_name,
+        selected = airline_name
       )
     ),
     mainPanel(
-      plotlyOutput(outputId = "bar_chart")
+      plotlyOutput(outputId = "bar_chart"),
+      plotlyOutput(outputId = "delay_bar_chart")
     )
   )
 )
 
-summary_page <- tabPanel()
+#summary_page <- tabPanel()
 
 proj_ui <- navbarPage(
   "Flights in the United States",
   information_page,
-  map_page,
+  #map_page,
   plot_page,
-  bar_chart_page,
-  summary_page
+  bar_chart_page
+  #summary_page
 )
 

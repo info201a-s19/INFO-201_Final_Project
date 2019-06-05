@@ -3,15 +3,35 @@ library("lintr")
 library("dplyr")
 library("ggplot2")
 library("plotly")
+library("maps")
 
 # Source for all datasets
 source("scripts/datasets.R")
-source("app_server.R")
 
 # Data wrangling space #
 
+# For Map
+july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
 unique_desti <- unique(july_flight$origin)
 unique_origin <- unique(july_flight$destination)
+usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
+
+# For Stacked Bar Chart
+total_flights <- nrow(flights)
+
+compare_airlines <- flights %>%
+  group_by(MONTH, AIRLINE) %>%
+  summarize(count = n())
+
+delay_time_months <- flights %>%
+  select(MONTH, DEPARTURE_DELAY, AIRLINE) %>%
+  group_by(MONTH, AIRLINE) %>%
+  summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
+
+american_delta_airlines <- list(
+  AmericanAirlines = filter(delay_time_months, AIRLINE == "AA"),
+  DeltaAirlines = filter(delay_time_months, AIRLINE == "DL")
+)
 
 # All airlines and their delays, each with a random sample of 50
 airline_delays <- list(
@@ -118,8 +138,6 @@ plot_page <- tabPanel(
 )
 
 # Bar Chart
-airline_name <- unique(delay_time_months$AIRLINE)
-
 bar_chart_page <- tabPanel(
   "Bar Chart",
   h1(strong(
@@ -129,30 +147,31 @@ bar_chart_page <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       checkboxGroupInput(
-        inputId = "delays",
+        inputId = "flights",
         label = "Choose which airlines to display",
-        choices = airline_name,
-        selected = airline_name
+        choices = names(american_delta_airlines),
+        selected = names(american_delta_airlines)
       )
     ),
     mainPanel(
       plotlyOutput(outputId = "bar_chart"),
       plotlyOutput(outputId = "delay_bar_chart")
-    ),
-    p("What we can learn from this data:"),
-    tags$ul(
-      tags$li("We expected December to have the most flights,
+    )
+  ),
+  p("What we can learn from this data:"),
+  tags$ul(
+    tags$li("We expected December to have the most flights,
               but based off the graph, it was surprising to see that October
               had more overall flights than December. July and August were a
               part of summer, where people are on vacation, so we were not
               surprised by them having the most flights."),
-      tags$li("The month with the most American Airline flights was .
-              The month with the most Delta Airlines flights was ,
-              and the month with the most overall flights was ."),
-      tags$li("The month with the least overall flights was .
+    tags$li("The month with the most American Airline flights was July,
+              with 81434 flights. The month with the most Delta Airlines
+              flights was August, with 80947 flights, and the month with
+              the most overall flights was July, having 162175 flights."),
+    tags$li("The month with the least overall flights was February.
               Many people were probably busy during this month,
               which was why people did not travel as much.")
-    )
   )
 )
 
@@ -176,14 +195,45 @@ map_page <- tabPanel(
   )
 )
 
-#summary_page <- tabPanel()
+summary_page <- tabPanel(
+  "Summary",
+  h1(strong("A Summary of Our Analysis"), align = "center"),
+  h2(strong("Comparing Delays of Airlines"), align = "center"),
+  p("To compare delays between Alaska Airlines and
+    Delta Airlines, we visualized the data with a scatter plot. The plot
+    is set up so that the x-axis symbolizes arrival delay and the y-axis
+    sybmolizes departure delay. A value at 0 means the flight is on time,
+    while negative and positive numbers will determine earlier or later
+    arrivals respectively. From this plot, we can conclude that most
+    flights arrive earlier or on time and that there isn't a difference
+    in which airline will arrive earlier. Most of the points are located
+    in the third quadrant, meaning their arrival and departure times are
+    earlier than expected. While Delta Airlines has an outlier with a 201
+    min arrival delay, the next two outliers are from Alaska Arilines at
+    77 and 81 minutes. This comparison supports the argument that
+    while Alaska and Delta Airlines are popular airlines with devoted
+    customers, no airline is 'better' than the other in terms of timeliness."),
+  br(),
+  h2(strong("Correlation Between Arrival and Departure"), align = "center"),
+  p("We created a table to compare different airlines with arrivals and departures
+    longer than 60 minutes. We discovered that while most airlines do depart on time,
+    on time departures also mean that arrivals are later. A noticable example is that
+    observations hover over the 0,0 mark because again, a value at 0 means the flight
+    is on time. This table is useful for two reason. One, we discovered that long departures
+    are rare for Delta Airlines. And two, there is a strong correlation between arrival
+    and departure time. If a flight departs late, it is most likely to arrive later."),
+  br(),
+  h2(strong("Route Distribution in July"), align = "center"),
+  p("The route distribution of flights in July are visualized on a map of
+    the United States. The map consists of dots representing an")
+)
 
-ui <- navbarPage(
+proj_ui <- navbarPage(
   "Flights in the United States",
   information_page,
   map_page,
   plot_page,
-  bar_chart_page
-  #summary_page
+  bar_chart_page,
+  summary_page
 )
 

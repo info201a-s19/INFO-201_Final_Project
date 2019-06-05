@@ -1,14 +1,6 @@
-library("dplyr")
-library("ggplot2")
-library("airportr")
-library("plotly")
-library("maps")
-
 source("app_ui.R")
 
-july_flight <- read.csv("data/final_df.csv", stringsAsFactors = F)
-
-server <- function(input, output) {
+proj_server <- function(input, output) {
   # Image of airplane
   output$airplane <- renderText({
     src <- "https://tinyurl.com/y2p3makn"
@@ -23,7 +15,7 @@ server <- function(input, output) {
       y = ~DEPARTURE_DELAY,
       type = "scatter",
       mode = "markers",
-      text = ~ paste0(
+      text = ~paste0(
         "Airline: ", names(airline_delays[input$delays]),
         "<br>Arrival Delay: ", ARRIVAL_DELAY,
         "<br>Departure Delay: ", DEPARTURE_DELAY
@@ -49,91 +41,78 @@ server <- function(input, output) {
   }, align = "c")
 
   # Stacked Bar chart
-  total_flights <- nrow(flights)
-
-  compare_airlines <- flights %>%
-    group_by(MONTH, AIRLINE) %>%
-    summarize(count = n())
-
-  delay_time_months <- flights %>%
-    select(MONTH, DEPARTURE_DELAY, AIRLINE) %>%
-    group_by(MONTH, AIRLINE) %>%
-    summarise(DELAY_MEAN = mean(DEPARTURE_DELAY, na.rm = TRUE), NUM_FLIGHTS = n())
-
   output$bar_chart <- renderPlotly({
-    num_flights_bar_chart <- ggplot(
-      data = compare_airlines,
-      aes(
-        x = MONTH,
-        y = count,
-        fill = AIRLINE,
-        text = paste("# of Flights: ", count)
-      )
-    ) +
-      geom_bar(stat = "identity", position = "dodge") +
+    num_flights_bar_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
+                                    aes(x = MONTH,
+                                        y = NUM_FLIGHTS,
+                                        fill = AIRLINE,
+                                        text = paste0("Airline: ",
+                                                      names(
+                                                        american_delta_airlines
+                                                        [input$flights]),
+                                                      "<br># of Flights: ",
+                                                      NUM_FLIGHTS))) +
+      geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Number of Flights across Months in 2015") +
       xlab("Months") + ylab("Number of Flights") +
-      scale_x_discrete(limits = c(
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      )) +
-      scale_fill_discrete(name = "Airlines", labels = c(
-        "American Airlines (AA)",
-        "Delta Airlines (DL)"
-      )) +
+      scale_x_discrete(limits = c("Jan",
+                                  "Feb",
+                                  "Mar",
+                                  "Apr",
+                                  "May",
+                                  "Jun",
+                                  "Jul",
+                                  "Aug",
+                                  "Sep",
+                                  "Oct",
+                                  "Nov",
+                                  "Dec")) +
+      scale_fill_discrete(name = "Airlines", labels = c("American Airlines (AA)",
+                                                      "Delta Airlines (DL)")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-    num_flights_bar_chart
+    ggplotly(num_flights_bar_chart, tooltip = "text")
   })
 
   output$delay_bar_chart <- renderPlotly({
-    delay_time_chart <- ggplot(
-      data = delay_time_months,
-      aes(
-        x = MONTH,
-        y = DELAY_MEAN,
-        fill = AIRLINE,
-        text = paste("Delay Time Average: ", DELAY_MEAN)
-      )
-    ) +
-      geom_bar(stat = "identity", position = "dodge") +
+    delay_time_chart <- ggplot(data = do.call("rbind", american_delta_airlines[input$flights]),
+                                    aes(x = MONTH,
+                                        y = DELAY_MEAN,
+                                        fill = AIRLINE,
+                                        text = paste0("Airline: ",
+                                                      names(
+                                                        american_delta_airlines
+                                                        [input$flights]),
+                                                      "<br>Mean Delay in min:",
+                                                      " ",
+                                                      round(
+                                                        DELAY_MEAN,
+                                                        digits = 2)))) +
+      geom_bar(stat = "identity", position = 'dodge') +
       ggtitle("Delay Time Average across Months in 2015") +
       xlab("Months") + ylab("Delay Time Average (minutes)") +
-      scale_x_discrete(limits = c(
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      )) +
+      scale_x_discrete(limits = c("Jan",
+                                  "Feb",
+                                  "Mar",
+                                  "Apr",
+                                  "May",
+                                  "Jun",
+                                  "Jul",
+                                  "Aug",
+                                  "Sep",
+                                  "Oct",
+                                  "Nov",
+                                  "Dec")) +
       scale_fill_manual(values = alpha(c("lightblue", "pink"), 1)) +
       theme(plot.title = element_text(hjust = 0.5)) # Center title
-    delay_time_chart
+    ggplotly(delay_time_chart, tooltip = "text")
   })
 
   # Map
   output$july_map <- renderPlot({
     title1 <- paste0("Origin: ", input$origin)
     data1 <- july_flight %>% filter(origin == input$origin)
-    usmap <- borders("state", colour = "slategrey", fill = "lightskyblue")
-    p <- ggplot() + usmap + 9
+    p <- ggplot() + usmap +
     geom_curve(
       data = data1,
       aes(

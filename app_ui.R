@@ -211,7 +211,15 @@ summary_page <- tabPanel(
   h1(strong("A Summary of Our Analysis"), align = "center"),
   h2(strong("Route Distribution in July"), align = "center"),
   p("The route distribution of flights in July are visualized on a map of
-    the United States. The map consists of dots representing an"),
+    the United States. A dot represents an airport. We discovered that 
+    most of these dots are located near the coast or close to the 
+    destination airport. For example, a customer can fly to three
+    airports from ATW and these airports are in surrounding states. 
+    Other airports, such as ATL, reaches farther states and even 
+    those in Hawaii and on the west coast. This route distribution
+    suggests that bigger, more well-known airports such as JFK and
+    ORD, are more likely to distribute their flights nation-wide.
+    Smaller airports are more likely to fly to neighboring states."),
   h2(strong("Comparing Delays of Airlines"), align = "center"),
   br(),
   p("To compare delays between different airlines, we visualized the data 

@@ -75,28 +75,29 @@ server <- function(input, output) {
   
   #Map
   output$july_map <- renderPlot({
-    title <- paste0("Origin:", input$origin)
+    title1 <- paste0("Origin: ", input$origin)
     data1 <- july_flight %>% filter(origin == input$origin)
-    usmap <- borders("state", colour="grey", fill="white")
+    usmap <- borders("state", colour="slategrey", fill="lightskyblue")
     p <- ggplot() + usmap +
       geom_curve(data = data1,
                  aes(y = ori_latitude, x= ori_longitude,
-                     yend=desti_latitude, xend=desti_longitude),
-                 size=0.5,
-                 curvature=0.2) +
-      geom_point(data=data1,
-                 aes(y = ori_latitude, x= ori_longitude),
-                 colour="blue",
+                     yend = desti_latitude, xend = desti_longitude),
+                 size = 0.5,
+                 curvature = 0.2) +
+      geom_point(data = data1,
+                 aes(y = ori_latitude, x = ori_longitude),
+                 colour="violet",
                  size=1.5) +
-      geom_point(data=data1,
-                 aes(y = desti_latitude, x=desti_longitude),
-                 colour="purple") +
+      geom_point(data = data1,
+                 aes(y = desti_latitude, x = desti_longitude),
+                 colour = "violet") +
       theme(axis.line=element_blank(),
-            axis.text.x=element_blank(),
-            axis.text.y=element_blank(),
-            axis.title.x=element_blank(),
-            axis.title.y=element_blank(),
-            axis.ticks=element_blank())
+            axis.text.x = element_blank(),
+            axis.text.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.ticks = element_blank()) +
+      labs(title = title1)
     p
   })
 }

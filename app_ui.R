@@ -130,16 +130,19 @@ bar_chart_page <- tabPanel(
 )
 
 map_page <- tabPanel(
-  "Map Page",
+  "Route Map",
   
-  titlePanel("Map Page"),
-  
+  h1(strong(
+    "Q: Where can you fly from these airports?", align = "certer")),
+  p("This map shows the route distribution of each airport in July"),
   sidebarLayout(
+    sidebarPanel(
     selectInput(
       "origin",
       label = "Choose an Origin",
       choices = unique_origin,
       selected = "LAX"
+    )
     ),
     mainPanel(
       plotOutput(outputId = "july_map")

@@ -234,7 +234,11 @@ map_page <- tabPanel(
   p("What we can learn from this data:"),
   tags$ul(
     tags$li("We found that during July, the month with most flights, the most
-            popular destination is Atlanta with 126 flights going to Atlanta.")
+            popular destination is Atlanta with 126 flights going to Atlanta."),
+    tags$li("We noticed that major cities such as Los Angeles and Atlanta has
+            many flight destinations. Since there is a bigger population, there
+            having a larger airport can accomodate more people traveling to
+            different places.")
   )
 )
 
@@ -280,7 +284,7 @@ summary_page <- tabPanel(
     will experience less delays when flying with Delta Airlines throughout the year."),
   sidebarLayout(
     sidebarPanel(
-      p("To compare delays between Alaska Airlines and
+      p("To compare delays between American Airlines and
         Delta Airlines, we visualized the data with a scatter plot. The plot
         is set up so that the x-axis symbolizes arrival delay and the y-axis
         sybmolizes departure delay. A value at 0 means the flight is on time,
